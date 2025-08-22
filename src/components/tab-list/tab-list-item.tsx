@@ -9,7 +9,7 @@ export default function TabListItem({ label, onClick, isActive = false }: TabLis
   };
 
   return (
-    <button type="button" onClick={onClick} className={getTabClassNames()} aria-selected={isActive}>
+    <button type="button" onClick={onClick} className={getTabClassNames()}>
       {label}
     </button>
   );

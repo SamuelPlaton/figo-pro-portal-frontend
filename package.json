@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --check .",
     "prepare": "npx husky-init"
   },
   "dependencies": {
