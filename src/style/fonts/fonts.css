@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'IvyEpic';
+  src: url('IvyEpic-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IvyEpic';
+  src: url('IvyEpic-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'IvyEpic';
+  src: url('IvyEpic-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IvyEpic';
+  src: url('IvyEpic-Bold-Italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Ivy Presto */
+@font-face {
+  font-family: 'IvyPresto';
+  src: url('IvyPresto-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IvyPresto';
+  src: url('IvyPresto-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'IvyPresto';
+  src: url('IvyPresto-Regular.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IvyPresto';
+  src: url('IvyPresto-Italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
