@@ -1,6 +1,5 @@
-// pages/_document.tsx
+// eslint-disable-next-line @next/next/no-document-import-in-page
 import { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
 
 export default function Document() {
   return (
