@@ -11,7 +11,8 @@
   --color-cream: #fbf6f1;
   --color-cyan: #95e6e2;
   --color-neutral-low: #475569;
-  --color-bd-low: #f1f5f9;
+  --color-neutral-lower: #f1f5f9;
+  --bg-neutral-lower: #f1f5f9;
   --font-primary: 'IvyEpic', Arial, sans-serif;
   --font-heading: 'IvyPresto', 'IvyEpic', sans-serif;
 }

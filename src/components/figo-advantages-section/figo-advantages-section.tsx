@@ -17,7 +17,7 @@ export default function FigoAdvantagesSection() {
       <div className="flex flex-col md:flex-row justify-between gap-4 md-h-[320px]">
         <div className="flex-1 rounded-2xl overflow-hidden">
           <img
-            src="/assets/vet-illustration.png"
+            src="/assets/vet-illustration-1.png"
             alt="vet-illustration"
             className="w-full object-cover h-[200px] md:h-full"
           />

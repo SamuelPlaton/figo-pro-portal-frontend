@@ -6,7 +6,7 @@ import { IconName } from '@/components/icon/icon';
 import { Icon } from '@/components';
 
 interface ButtonProps {
-  label: string;
+  label?: string;
   size?: 'sm' | 'md' | 'lg';
   onClick?: () => void;
   variant?: 'outline' | 'primary' | 'ghost';
@@ -15,6 +15,8 @@ interface ButtonProps {
   href?: string;
   target?: string;
   className?: string;
+  type?: 'button' | 'submit';
+  disabled?: boolean;
 }
 export default function Button({
   label,
@@ -26,19 +28,28 @@ export default function Button({
   href,
   target,
   className,
+  type = 'button',
+  disabled = false,
 }: ButtonProps) {
   const classNames = clsx(
     [buttonClassNames.global],
     [buttonClassNames.sizes[size]],
     [buttonClassNames.variants[variant]],
+    { 'border-gray! bg-neutral-lower! text-gray!': disabled },
     className,
   );
 
+  const imageSizes = {
+    sm: 20,
+    md: 20,
+    lg: 24,
+  };
+
   const content = (
     <>
-      {prependIcon && <Icon name={prependIcon} size={20} />}
-      <span>{label}</span>
-      {appendIcon && <Icon name={appendIcon} size={20} />}
+      {prependIcon && <Icon name={prependIcon} size={imageSizes[size]} />}
+      {label && <span>{label}</span>}
+      {appendIcon && <Icon name={appendIcon} size={imageSizes[size]} />}
     </>
   );
 
@@ -51,7 +62,7 @@ export default function Button({
   }
 
   return (
-    <button type="button" onClick={onClick} className={classNames}>
+    <button type={type} onClick={onClick} className={classNames} disabled={disabled}>
       {content}
     </button>
   );
