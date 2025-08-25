@@ -2,11 +2,18 @@
 
 import Image from 'next/image';
 import { Button, MobileNavigation } from '@/components';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/types';
 
 export default function Header() {
+  const router = useRouter();
+
   return (
     <div className="flex flex-row justify-between m-4 md:mx-20 md:my-6">
-      <div className="flex flex-row items-center gap-2">
+      <div
+        className="flex flex-row items-center gap-2 cursor-pointer"
+        onClick={() => router.push(ROUTES.HOME)}
+      >
         <Image
           src="/assets/figo-short-logo.svg"
           alt="figo-logo"

@@ -46,7 +46,7 @@ export default function FaqSection() {
       </div>
       <div>
         {questions[activeTab].map(({ label, content }, index) => (
-          <Collapsible key={index} label={label} className="py-4 border-b border-bd-low">
+          <Collapsible key={index} label={label} className="py-4 border-b border-neutral-lower">
             {content}
           </Collapsible>
         ))}

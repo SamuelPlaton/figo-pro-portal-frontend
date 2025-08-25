@@ -1,0 +1,4 @@
+next.config.ts
+eslint.config.mjs
+postcss.config.js
+tailwind.config.js
