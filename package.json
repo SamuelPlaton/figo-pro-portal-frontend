@@ -2,16 +2,18 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint:eslint": "eslint .",
-    "lint:prettier": "prettier --check .",
-    "prepare": "npx husky-init"
+    "lint:prettier": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "prepare": "npx husky-init && husky install"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.12",
+    "@typescript-eslint/parser": "^8.40.0",
     "clsx": "^2.1.1",
     "next": "15.5.0",
     "react": "19.1.0",
@@ -37,7 +39,7 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,css,md}": [
+    "src/**/*.{ts,tsx,js,jsx,json,css,md}": [
       "prettier --write"
     ]
   }

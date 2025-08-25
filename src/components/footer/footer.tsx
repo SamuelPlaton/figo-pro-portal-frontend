@@ -19,7 +19,7 @@ export default function Footer() {
     { title: "500 crédits Figo offerts dès l'inscription", description: 'Lorem Ipsum' },
   ];
   const authenticationFooter = (
-    <footer className="fixed bottom-0 left-0 right-0 bg-cream py-10 px-20 flex flex-row gap-4 justify-between">
+    <footer className="w-full bg-cream py-10 px-20 flex flex-row gap-4 justify-between">
       {authenticationFooterArgs.map(({ title, description }, key) => (
         <div className="flex flex-col gap-2" key={key}>
           <span className="text-lg font-bold text-primary">{title}</span>
