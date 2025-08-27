@@ -1,6 +1,7 @@
 export * from './breadcrumb';
 export * from './button';
 export * from './collapsible';
+export * from './drawer';
 export * from './faq-section';
 export * from './figo-advantages-section';
 export * from './footer';
@@ -11,6 +12,8 @@ export * from './how-it-works-section';
 export * from './icon';
 export * from './input';
 export * from './mobile-navigation';
+export * from './product-item';
+export * from './product-item-skeleton';
 export * from './promo-tracking-card';
 export * from './sign-in-form';
 export * from './sign-up-form';

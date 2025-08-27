@@ -6,6 +6,8 @@ export default function Footer() {
   const pathname = usePathname();
 
   const isAuthenticationRoute = [ROUTES.SIGNIN, ROUTES.SIGNUP].includes(pathname as ROUTES);
+  const noFooterRoutes = [ROUTES.ORDER, ROUTES.CHECKOUT];
+  if (noFooterRoutes.includes(pathname as ROUTES)) return null;
 
   const vanillaFooter = (
     <footer className="w-full text-center pb-8 pt-10 lg:pb-16 lg:pt-20 text-neutral-low">

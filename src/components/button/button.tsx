@@ -35,7 +35,7 @@ export default function Button({
     [buttonClassNames.global],
     [buttonClassNames.sizes[size]],
     [buttonClassNames.variants[variant]],
-    { 'border-gray! bg-neutral-lower! text-gray!': disabled },
+    { 'border-neutral-lower! bg-neutral-lower! text-gray!': disabled },
     className,
   );
 
@@ -72,7 +72,7 @@ const buttonClassNames = {
   global: 'rounded-full font-bold flex flex-row justify-center items-center gap-2 cursor-pointer',
   sizes: {
     sm: 'px-4 py-2',
-    md: 'px-4 py-3',
+    md: 'px-4 py-2.5',
     lg: 'px-6 py-3',
   },
   variants: {
