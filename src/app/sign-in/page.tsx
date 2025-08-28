@@ -1,4 +1,5 @@
-import { HeroAuth, SignInForm } from '@/components';
+import { HeroAuth } from '@/components';
+import { SignInForm } from '@/app/sign-in';
 
 export default function Login() {
   return (

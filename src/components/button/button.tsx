@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { IconName } from '@/components/icon/icon';
-import { Icon } from '@/components';
+import { Icon, Spinner } from '@/components';
 
 interface ButtonProps {
   label?: string;
@@ -17,6 +17,7 @@ interface ButtonProps {
   className?: string;
   type?: 'button' | 'submit';
   disabled?: boolean;
+  loading?: boolean;
 }
 export default function Button({
   label,
@@ -30,6 +31,7 @@ export default function Button({
   className,
   type = 'button',
   disabled = false,
+  loading = false,
 }: ButtonProps) {
   const classNames = clsx(
     [buttonClassNames.global],
@@ -45,7 +47,9 @@ export default function Button({
     lg: 24,
   };
 
-  const content = (
+  const content = loading ? (
+    <Spinner />
+  ) : (
     <>
       {prependIcon && <Icon name={prependIcon} size={imageSizes[size]} />}
       {label && <span>{label}</span>}
@@ -62,14 +66,15 @@ export default function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={classNames} disabled={disabled}>
+    <button type={type} onClick={onClick} className={classNames} disabled={disabled || loading}>
       {content}
     </button>
   );
 }
 
 const buttonClassNames = {
-  global: 'rounded-full font-bold flex flex-row justify-center items-center gap-2 cursor-pointer',
+  global:
+    'rounded-full font-bold flex flex-row justify-center items-center gap-2 cursor-pointer min-h-6',
   sizes: {
     sm: 'px-4 py-2',
     md: 'px-4 py-2.5',

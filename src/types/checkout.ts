@@ -1,6 +1,5 @@
 export interface CheckoutItem {
-  id: number;
-  quantity: number;
+  id: string;
 }
 
 export interface Checkout {

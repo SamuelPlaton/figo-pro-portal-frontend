@@ -4,9 +4,10 @@ import ArrowRightIcon from '@/components/icon/icons/arrow-right.svg';
 import BurgerMenuIcon from '@/components/icon/icons/burger-menu.svg';
 import CheckIcon from '@/components/icon/icons/check';
 import ClockIcon from '@/components/icon/icons/clock';
-import ExternalLinkIcon from '@/components/icon/icons/external-link.svg';
+import ExternalLinkIcon from '@/components/icon/icons/external-link';
 import FigoCheckIcon from '@/components/icon/icons/figo-check.svg';
-import FigoCoinIcon from '@/components/icon/icons/figo-coin.svg';
+import FigoCoinIcon from '@/components/icon/icons/figo-coin';
+import PackageIcon from '@/components/icon/icons/package';
 import PlusIcon from '@/components/icon/icons/plus.svg';
 import ShoppingCartIcon from '@/components/icon/icons/shopping-cart';
 import XIcon from '@/components/icon/icons/x';
@@ -20,6 +21,7 @@ export type IconName =
   | 'externalLink'
   | 'figoCheck'
   | 'figoCoin'
+  | 'package'
   | 'plus'
   | 'shoppingCart'
   | 'x';
@@ -39,6 +41,7 @@ const icons: Record<IconName, React.FC<IconProps>> = {
   externalLink: ExternalLinkIcon,
   figoCheck: FigoCheckIcon,
   figoCoin: FigoCoinIcon,
+  package: PackageIcon,
   plus: PlusIcon,
   shoppingCart: ShoppingCartIcon,
   x: XIcon,

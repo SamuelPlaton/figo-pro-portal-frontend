@@ -9,6 +9,7 @@ interface InputProps {
   disabled?: boolean;
   type?: string;
   autoComplete?: string;
+  error?: string;
 }
 
 export default function Input({
@@ -19,24 +20,22 @@ export default function Input({
   disabled = false,
   type = 'text',
   autoComplete = 'off',
+  error,
   ...props
 }: InputProps) {
-  const getFormattedPlaceholder = () => {
-    if (required && placeholder && placeholder.length > 0) {
-      return `${placeholder}*`;
-    }
-    return placeholder;
-  };
-
   const classNames = clsx(
     'border border-gray rounded-2xl px-3 py-3.5 w-full',
     { 'hover:border-neutral-low': !disabled },
     { 'focus:border-neutral-low focus:shadow-[0_0_0_3px_#B3C1C5] focus:outline-none': !disabled },
     { 'bg-neutral-lower': disabled },
+    {
+      'border-red-500 hover:border-red-400 focus:border-red-300 focus:shadow-[0_0_0_3px_#ffa2a2]':
+        !!error,
+    },
     { 'mt-1': label },
   );
 
-  const labelClassNames = clsx('font-bold mb-2', { 'text-[#94A3B8]': disabled });
+  const labelClassNames = clsx('font-bold text-primary mb-2', { 'text-[#94A3B8]': disabled });
 
   return (
     <div>
@@ -49,7 +48,7 @@ export default function Input({
         id={name}
         name={name}
         className={classNames}
-        placeholder={getFormattedPlaceholder()}
+        placeholder={placeholder}
         required={required}
         type={type}
         autoComplete={disabled ? 'off' : autoComplete}

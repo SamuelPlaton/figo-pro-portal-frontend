@@ -15,22 +15,23 @@ export default function ProductItem({ onClick, product, isAlreadyAdded }: Produc
       year: 'numeric',
     });
   };
+  const cannotReorder = false;
   return (
     <div className="flex flex-col gap-4 w-[260px]">
       <div
-        className={`overflow-hidden relative bg-[#FDF5ED] p-8 rounded-2xl h-[260px] ${product.conditions.reorder_date && 'border border-neutral-lower'}`}
+        className={`overflow-hidden relative bg-[#FDF5ED] p-8 rounded-2xl h-[260px] ${cannotReorder && 'border border-neutral-lower'}`}
       >
         <img
-          src={`/assets/products/${product.reference}.png`}
+          src={`/assets/products/${product.external_reference}.png`}
           alt={product.label}
-          className={`${product.conditions.reorder_date && 'blur-xs'}`}
+          className={`${cannotReorder && 'blur-xs'}`}
         />
-        {product.conditions.reorder_date && (
+        {cannotReorder && (
           <div className="absolute top-0 left-0 w-full h-full bg-white opacity-90 flex flex-col items-center p-8">
             <Icon name="clock" size={32} color="#475569" />
             <span className="text-primary text-center">
               Un délai est nécessaire entre deux commandes. Vous pourrez commander à nouveau à
-              partir du <b>{getDisplayDate(product.conditions.reorder_date)}</b>
+              partir du <b>{getDisplayDate('')}</b>
             </span>
           </div>
         )}
@@ -40,14 +41,14 @@ export default function ProductItem({ onClick, product, isAlreadyAdded }: Produc
           <span>{product.label}</span>
           {product.price ? (
             <div className="flex flex-row gap-1">
-              <Icon name="figoCoin" width={20} height={25} style={{ color: '#475569' }} />
+              <Icon name="figoCoin" />
               <span>{product.price}</span>
             </div>
           ) : (
             <span>Gratuit</span>
           )}
         </div>
-        <span className="text-gray">Quantité : {product.count}</span>
+        <span className="text-gray">Quantité : {product.quantity}</span>
         {isAlreadyAdded ? (
           <Button label="Ajouté" className="mt-4" variant="outline" prependIcon="check" />
         ) : (
@@ -55,7 +56,7 @@ export default function ProductItem({ onClick, product, isAlreadyAdded }: Produc
             className="mt-4"
             label="Ajouter au panier"
             onClick={onClick}
-            disabled={!product.conditions.can_order}
+            disabled={cannotReorder}
             appendIcon="plus"
             variant="outline"
           />

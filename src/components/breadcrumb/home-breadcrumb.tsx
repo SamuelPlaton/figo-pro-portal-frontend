@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 
-export default function Breadcrumb() {
+export default function HomeBreadcrumb() {
   const [activeBreadcrumb, setActiveBreadcrumb] = useState<number>(0);
   const breadcrumbOptions = [
     {

@@ -1,9 +1,7 @@
 export interface Product {
-  id: number;
+  id: string;
   label: string;
-  reference: string;
+  external_reference: string;
   price?: number;
-  count: number;
-  conditions: { can_order: boolean; reorder_date?: string };
-  max_items: number;
+  quantity: number;
 }
