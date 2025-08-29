@@ -1,6 +1,6 @@
 import { Checkout, CheckoutItem, Product } from '@/types';
-import { CheckoutResumeItem } from '@/app/commander';
-import { Button, Icon } from '@/components';
+import { CheckoutResumeItem, CheckoutTotalPrice } from '@/app/commander';
+import { Button } from '@/components';
 
 interface CheckoutResumeProps {
   checkout: Checkout;
@@ -16,12 +16,6 @@ export default function CheckoutResume({
   onSubmit,
   onClose,
 }: CheckoutResumeProps) {
-  const getTotalPrice = () => {
-    return checkout.items.reduce(
-      (acc, item) => acc + (products.find(p => p.id === item.id)?.price ?? 0),
-      0,
-    );
-  };
   return (
     <div className="flex flex-col gap-4">
       <span className="font-bold text-lg">Votre panier</span>
@@ -38,12 +32,15 @@ export default function CheckoutResume({
       <div className="absolute bottom-0 left-0 right-0 m-6 pt-6 border-t border-neutral-lower flex flex-col gap-4">
         <div className="flex flex-row justify-between gap-2 font-bold">
           <span>Sous total</span>
-          <div className="flex flex-row gap-1">
-            <Icon name="figoCoin" />
-            <span>{getTotalPrice()}</span>
-          </div>
+          <CheckoutTotalPrice checkout={checkout} products={products} />
         </div>
-        <Button label="Continuer" appendIcon="arrowRight" size="lg" onClick={onSubmit} />
+        <Button
+          label="Continuer"
+          appendIcon="arrowRight"
+          size="lg"
+          onClick={onSubmit}
+          disabled={checkout.items.length === 0}
+        />
         <span className="underline text-primary cursor-pointer text-center" onClick={onClose}>
           ou continuer mes commandes
         </span>

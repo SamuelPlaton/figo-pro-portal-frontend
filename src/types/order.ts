@@ -23,6 +23,7 @@ export interface CloudPrinterOrder {
     phone: string;
   }[];
   items: {
+    title?: string;
     reference: string;
     product: string;
     count: number;

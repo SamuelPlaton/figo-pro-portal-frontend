@@ -1,6 +1,6 @@
 export default function ProductItemSkeleton() {
   return (
-    <div className="w-[260px] bg-gray-100 rounded-xl animate-pulse">
+    <div className="basis-full md:basis-auto min-w-[260px] bg-gray-100 rounded-xl animate-pulse">
       {/* Image */}
       <div className="w-full h-[260px] bg-gray-300 rounded-xl mb-4"></div>
 

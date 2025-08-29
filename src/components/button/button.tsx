@@ -37,7 +37,7 @@ export default function Button({
     [buttonClassNames.global],
     [buttonClassNames.sizes[size]],
     [buttonClassNames.variants[variant]],
-    { 'border-neutral-lower! bg-neutral-lower! text-gray!': disabled },
+    { 'border-neutral-lower! bg-neutral-lower! text-gray! cursor-default!': disabled },
     className,
   );
 

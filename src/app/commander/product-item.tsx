@@ -17,14 +17,14 @@ export default function ProductItem({ onClick, product, isAlreadyAdded }: Produc
   };
   const cannotReorder = false;
   return (
-    <div className="flex flex-col gap-4 w-[260px]">
+    <div className="flex flex-col basis-full md:basis-auto gap-4 min-w-[260px]">
       <div
-        className={`overflow-hidden relative bg-[#FDF5ED] p-8 rounded-2xl h-[260px] ${cannotReorder && 'border border-neutral-lower'}`}
+        className={`w-full overflow-hidden relative bg-[#FDF5ED] p-8 rounded-2xl h-[260px] ${cannotReorder && 'border border-neutral-lower'}`}
       >
         <img
           src={`/assets/products/${product.external_reference}.png`}
           alt={product.label}
-          className={`${cannotReorder && 'blur-xs'}`}
+          className={`max-h-full max-w-full m-auto ${cannotReorder && 'blur-xs'}`}
         />
         {cannotReorder && (
           <div className="absolute top-0 left-0 w-full h-full bg-white opacity-90 flex flex-col items-center p-8">
@@ -48,7 +48,7 @@ export default function ProductItem({ onClick, product, isAlreadyAdded }: Produc
             <span>Gratuit</span>
           )}
         </div>
-        <span className="text-gray">Quantité : {product.quantity}</span>
+        <span className="text-gray text-sm">Quantité : {product.quantity}</span>
         {isAlreadyAdded ? (
           <Button label="Ajouté" className="mt-4" variant="outline" prependIcon="check" />
         ) : (
