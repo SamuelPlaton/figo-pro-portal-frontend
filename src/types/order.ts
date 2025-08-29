@@ -1,6 +1,10 @@
+import { Address, Product } from '@/types';
+
 export interface Order {
   id: string;
   reference_id: string;
+  products: Product[];
+  address: Address;
 }
 
 export interface CloudPrinterOrder {

@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
-import { Checkout, CloudPrinterOrder, User } from '@/types';
+import { Checkout, Order, User } from '@/types';
 import { Button, Input } from '@/components';
 import { api } from '@/lib/api';
 
 interface CheckoutFormProps {
   checkout: Checkout;
-  onSuccess: (order: CloudPrinterOrder) => void;
+  onSuccess: (order: Order) => void;
 }
 
 type FormData = {
@@ -60,9 +60,7 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
         items: checkout.items,
       })
       .then(response => {
-        return api.orders.getOrder(response.data.data.reference_id).then(order => {
-          onSuccess(order.data.data);
-        });
+        onSuccess(response.data.data);
       });
   };
 
