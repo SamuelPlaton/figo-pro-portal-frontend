@@ -24,16 +24,14 @@ export default function ProductCatalogue({
       {/* PRODUCT LIST */}
       <div className="mt-8 flex flex-row flex-wrap gap-8">
         {products
-          ? [...products, ...products, ...products, ...products, ...products, ...products].map(
-              (product, key) => (
-                <ProductItem
-                  key={key}
-                  onClick={() => onAddProduct(product)}
-                  product={product}
-                  isAlreadyAdded={checkout.items.some(item => item.id === product.id)}
-                />
-              ),
-            )
+          ? products.map((product, key) => (
+              <ProductItem
+                key={key}
+                onClick={() => onAddProduct(product)}
+                product={product}
+                isAlreadyAdded={checkout.items.some(item => item.id === product.id)}
+              />
+            ))
           : Array.from({ length: 7 }).map((_, i) => <ProductItemSkeleton key={i} />)}
       </div>
     </div>

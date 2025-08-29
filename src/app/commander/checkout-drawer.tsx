@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { Drawer } from '@/components';
-import { Checkout, CheckoutItem, CloudPrinterOrder, Product } from '@/types';
+import { Checkout, CheckoutItem, Order, Product, ROUTES } from '@/types';
 import { CheckoutForm, CheckoutResume } from '@/app/commander';
 import CheckoutSuccess from '@/app/commander/checkout-success';
+import { useRouter } from 'next/navigation';
 
 interface CheckoutDrawerProps {
   isOpen: boolean;
@@ -21,21 +22,25 @@ export default function CheckoutDrawer({
   checkout,
   products,
 }: CheckoutDrawerProps) {
+  const router = useRouter();
   const [isCheckoutFormOpened, setIsCheckoutFormOpened] = useState(false);
-  const [order, setOrder] = useState<CloudPrinterOrder>();
+  const [order, setOrder] = useState<Order>();
 
-  const handleCheckoutFormClose = () => {
-    setIsCheckoutFormOpened(false);
+  const handleCheckoutClose = () => {
+    if (order) {
+      router.push(ROUTES.HOME);
+    }
     onClose();
+    setIsCheckoutFormOpened(false);
   };
 
-  const handleOrderCreated = (order: CloudPrinterOrder) => {
+  const handleOrderCreated = (order: Order) => {
     setOrder(order);
     onOrderCreated();
   };
 
   const getChildren = () => {
-    if (order) return <CheckoutSuccess products={products} order={order} />;
+    if (order) return <CheckoutSuccess order={order} />;
     if (isCheckoutFormOpened)
       return <CheckoutForm checkout={checkout} onSuccess={handleOrderCreated} />;
     return (
@@ -44,13 +49,13 @@ export default function CheckoutDrawer({
         products={products}
         onRemoveItem={onRemoveCheckoutItem}
         onSubmit={() => setIsCheckoutFormOpened(true)}
-        onClose={handleCheckoutFormClose}
+        onClose={handleCheckoutClose}
       />
     );
   };
 
   return (
-    <Drawer isOpen={isOpen} onClose={handleCheckoutFormClose}>
+    <Drawer isOpen={isOpen} onClose={handleCheckoutClose}>
       {getChildren()}
     </Drawer>
   );

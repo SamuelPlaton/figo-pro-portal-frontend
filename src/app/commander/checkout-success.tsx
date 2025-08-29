@@ -1,15 +1,11 @@
-import { CloudPrinterOrder, Product } from '@/types';
+import { CloudPrinterOrder, Order, Product } from '@/types';
 import { CheckoutResumeItem, CheckoutTotalPrice } from '@/app/commander/index';
 
 interface CheckoutSuccessProps {
-  products: Product[];
-  order: CloudPrinterOrder;
+  order: Order;
 }
 
-// todo: change reference from uuid to increasing int
-// todo: add "Sous-Total"
-// todo: set text as neutral low
-export default function CheckoutSuccess({ products, order }: CheckoutSuccessProps) {
+export default function CheckoutSuccess({ order }: CheckoutSuccessProps) {
   return (
     <div className="flex flex-col gap-1">
       <span className="text-lg font-bold">Merci pour votre commande !</span>
@@ -18,30 +14,30 @@ export default function CheckoutSuccess({ products, order }: CheckoutSuccessProp
       </span>
       <div className="flex flex-row gap-1 pb-4">
         <span className="text-neutral-low">Numéro de commande :</span>
-        <span className="font-bold text-primary">{order.reference}</span>
+        <span className="font-bold text-primary">{order.reference_id}</span>
       </div>
       <div className="mb-4">
-        {order.items.map((item, key) => (
+        {order.products.map((item, key) => (
           <CheckoutResumeItem
             key={key}
-            product={products.find(p => item.reference === p.external_reference)}
+            product={item}
             className="py-4 border-y border-neutral-lower"
           />
         ))}
       </div>
       <div className="font-bold flex flex-row justify-between gap-2 mb-6">
         <span>Sous total</span>
-        <CheckoutTotalPrice order={order} products={products} />
+        <CheckoutTotalPrice order={order} />
       </div>
       <div className="flex flex-col text-neutral-low">
         <span className="font-bold mb-2 text-black">Informations de livraison</span>
         <span>
-          {order.addresses[0].firstname} {order.addresses[0].lastname}
+          {order.address.first_name} {order.address.last_name}
         </span>
-        <span>{order.addresses[0].company}</span>
-        <span>{order.addresses[0].street1}</span>
+        <span>{order.address.company}</span>
+        <span>{order.address.street1}</span>
         <span>
-          {order.addresses[0].zip}, {order.addresses[0].city}
+          {order.address.zip}, {order.address.city}
         </span>
       </div>
     </div>

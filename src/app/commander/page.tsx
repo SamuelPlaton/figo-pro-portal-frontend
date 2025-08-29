@@ -4,13 +4,9 @@ import { Checkout, CheckoutItem, Product } from '@/types';
 import { api } from '@/lib/api';
 import { CheckoutDrawer, CheckoutNavigation, ProductCatalogue } from '@/app/commander/index';
 
-// todo: drawer desktop and noscroll
-// todo: return accueil after close onOrderSuccess
 // todo: ASK STEFANO - cancel and reorder if order is not started
-// todo: increase opacity product catalogue nav bar
 // todo: offline overlay
 // todo: implement toast (cf. tailwind)
-// todo: style qr code dots else rounded + logo
 export default function OrderPage() {
   const [products, setProducts] = useState<Product[]>();
   const [checkout, setCheckout] = useState<Checkout>({ items: [] });
@@ -50,10 +46,10 @@ export default function OrderPage() {
     setCheckout({ items: [] });
   };
 
-  // todo: make husky work in front and back
   // todo: set not-found page
   // todo: rework header
   // todo: historique de commande
+  // todo: customised heads per page (Metadata API) & robots.txt & sitemap
 
   return (
     <>
