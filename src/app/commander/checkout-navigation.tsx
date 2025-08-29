@@ -1,5 +1,5 @@
 import { Button } from '@/components';
-import { Checkout, ROUTES } from '@/types';
+import { Checkout } from '@/types';
 import { useRouter } from 'next/navigation';
 
 interface CheckoutNavigationProps {
