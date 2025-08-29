@@ -1,4 +1,4 @@
-import { Checkout, CloudPrinterOrder, Order, Product } from '@/types';
+import { Checkout, Order, Product } from '@/types';
 import { Icon } from '@/components';
 
 interface CheckoutTotalPriceProps {

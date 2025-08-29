@@ -1,4 +1,4 @@
-import { CloudPrinterOrder, Order, Product } from '@/types';
+import { Order } from '@/types';
 import { CheckoutResumeItem, CheckoutTotalPrice } from '@/app/commander/index';
 
 interface CheckoutSuccessProps {

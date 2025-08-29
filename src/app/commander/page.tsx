@@ -7,6 +7,7 @@ import { CheckoutDrawer, CheckoutNavigation, ProductCatalogue } from '@/app/comm
 // todo: ASK STEFANO - cancel and reorder if order is not started
 // todo: offline overlay
 // todo: implement toast (cf. tailwind)
+// todo: make A4 order work on CloudPrinter
 export default function OrderPage() {
   const [products, setProducts] = useState<Product[]>();
   const [checkout, setCheckout] = useState<Checkout>({ items: [] });
