@@ -17,7 +17,7 @@ export default function Collapsible({ label, children, className }: CollapsibleP
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="rounded-full w-10 h-10 text-2xl bg-primary text-white cursor-pointer"
+          className="rounded-full min-w-10 w-10 h-10 text-2xl bg-primary text-white cursor-pointer"
         >
           {isOpen ? '-' : '+'}
         </button>

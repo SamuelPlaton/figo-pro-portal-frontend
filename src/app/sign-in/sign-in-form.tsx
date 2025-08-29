@@ -25,6 +25,7 @@ export default function SignInForm() {
           required
           type="email"
           autoComplete="email"
+          error={errors.email?.message}
           {...register('email', { required: true })}
         />
         <Input
@@ -32,9 +33,10 @@ export default function SignInForm() {
           required
           type="password"
           autoComplete="password"
+          error={errors.password?.message}
           {...register('password', { required: true })}
         />
-        <Button type="submit" label="Se connecter" />
+        <Button type="submit" label="Se connecter" loading={isSubmitting} />
       </form>
       <span className="text-neutral-low text-center my-6">- Ou se connecter avec -</span>
       <Button label={"S'inscrire avec Google"} variant="outline" />

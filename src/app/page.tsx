@@ -1,17 +1,17 @@
 import {
-  Breadcrumb,
+  HomeBreadcrumb,
   FigoAdvantagesSection,
   Hero,
   HowItWorksSection,
   FaqSection,
-} from '@/components';
+} from '@/app/(home)';
 
 export default function Home() {
   return (
     <>
       <Hero businessName="Clinique vétérinaire Vétiroise" />
       <div className="root-spacing pr-0 pb-8">
-        <Breadcrumb />
+        <HomeBreadcrumb />
       </div>
       <div className="root-spacing flex flex-col gap-12">
         <HowItWorksSection />

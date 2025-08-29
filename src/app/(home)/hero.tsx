@@ -1,4 +1,4 @@
-import { PromoTrackingCard } from '@/components';
+import { PromoTrackingCard } from '@/app/(home)';
 
 interface HeroProps {
   businessName: string;
