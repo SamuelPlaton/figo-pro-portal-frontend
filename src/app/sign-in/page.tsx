@@ -1,5 +1,11 @@
 import { HeroAuth } from '@/components';
 import { SignInForm } from '@/app/sign-in';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Figo - S'inscrire",
+  description: 'Inscrivez-vous à votre portail professionnel',
+};
 
 export default function Login() {
   return (

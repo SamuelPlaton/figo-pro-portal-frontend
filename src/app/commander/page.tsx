@@ -3,6 +3,12 @@ import { useEffect, useState } from 'react';
 import { Checkout, CheckoutItem, Product } from '@/types';
 import { api } from '@/lib/api';
 import { CheckoutDrawer, CheckoutNavigation, ProductCatalogue } from '@/app/commander/index';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Figo - Commander',
+  description: 'Commandez des goodies et flyers avec vos crédits Figo',
+};
 
 // todo: offline overlay
 // todo: implement toast (cf. tailwind)
@@ -47,8 +53,6 @@ export default function OrderPage() {
   };
 
   // todo: rework header
-  // todo: historique de commande
-  // todo: customised heads per page (Metadata API) & robots.txt & sitemap
 
   return (
     <>

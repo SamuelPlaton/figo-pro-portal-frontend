@@ -6,6 +6,12 @@ import {
   HowItWorksSection,
   FaqSection,
 } from '@/app/(home)';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Figo - Portail vétérinaire',
+  description: 'Accédez à votre portail professionnel',
+};
 
 export default function Home() {
   return (

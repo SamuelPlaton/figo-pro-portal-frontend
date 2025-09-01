@@ -1,0 +1,12 @@
+# Allow bots to cross website
+User-agent: *
+Allow: /
+
+# Bloque les éventuelles pages sensibles
+Disallow: /legal
+Disallow: /legal/*
+Disallow: /404
+Disallow: /connect-toy
+
+# Indique le sitemap
+Sitemap: https://app.seducestory.com/sitemap.xml
