@@ -1,9 +1,9 @@
-import { Address, Product } from '@/types';
+import { Address, ProductOrder } from '@/types';
 
 export interface Order {
   id: string;
   reference_id: string;
-  products: Product[];
+  product_orders: ProductOrder[];
   address: Address;
   created_at: string;
   updated_at: string;

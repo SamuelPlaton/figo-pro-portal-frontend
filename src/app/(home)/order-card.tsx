@@ -19,13 +19,15 @@ export default function OrderCard({ order }: OrderCardProps) {
         </div>
         <div className="flex flex-col gap-1">
           <span className="font-bold">Total</span>
-          <span>{order.products.reduce((acc, product) => acc + (product?.price || 0), 0)} CF</span>
+          <span>
+            {order.product_orders.reduce((acc, item) => acc + (item.product?.price || 0), 0)} CF
+          </span>
         </div>
       </div>
       <div>
-        {order.products.map((item, key) => (
+        {order.product_orders.map((item, key) => (
           <div className="p-4" key={key}>
-            <ProductListItem product={item} />
+            <ProductListItem product={item.product} />
           </div>
         ))}
       </div>

@@ -17,10 +17,10 @@ export default function CheckoutSuccess({ order }: CheckoutSuccessProps) {
         <span className="font-bold text-primary">{order.reference_id}</span>
       </div>
       <div className="mb-4">
-        {order.products.map((item, key) => (
+        {order.product_orders.map((item, key) => (
           <ProductListItem
             key={key}
-            product={item}
+            product={item.product}
             className="py-4 border-y border-neutral-lower"
           />
         ))}

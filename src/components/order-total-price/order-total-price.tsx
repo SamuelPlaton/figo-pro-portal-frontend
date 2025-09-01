@@ -15,7 +15,7 @@ export default function OrderTotalPrice({ checkout, order, products }: OrderTota
         0,
       );
     } else if (order) {
-      return order.products.reduce((acc, item) => acc + (item.price ?? 0), 0);
+      return order.product_orders.reduce((acc, item) => acc + (item.product?.price ?? 0), 0);
     }
   };
 
