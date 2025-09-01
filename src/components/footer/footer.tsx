@@ -6,7 +6,7 @@ export default function Footer() {
   const pathname = usePathname();
 
   const isAuthenticationRoute = [ROUTES.SIGNIN, ROUTES.SIGNUP].includes(pathname as ROUTES);
-  const noFooterRoutes = [ROUTES.ORDER, ROUTES.CHECKOUT];
+  const noFooterRoutes = [ROUTES.ORDER];
   if (noFooterRoutes.includes(pathname as ROUTES)) return null;
 
   const vanillaFooter = (

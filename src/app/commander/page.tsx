@@ -4,7 +4,6 @@ import { Checkout, CheckoutItem, Product } from '@/types';
 import { api } from '@/lib/api';
 import { CheckoutDrawer, CheckoutNavigation, ProductCatalogue } from '@/app/commander/index';
 
-// todo: ASK STEFANO - cancel and reorder if order is not started
 // todo: offline overlay
 // todo: implement toast (cf. tailwind)
 // todo: make A4 order work on CloudPrinter
@@ -47,7 +46,6 @@ export default function OrderPage() {
     setCheckout({ items: [] });
   };
 
-  // todo: set not-found page
   // todo: rework header
   // todo: historique de commande
   // todo: customised heads per page (Metadata API) & robots.txt & sitemap

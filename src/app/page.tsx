@@ -1,6 +1,7 @@
 import {
   HomeBreadcrumb,
   FigoAdvantagesSection,
+  GoodiesSection,
   Hero,
   HowItWorksSection,
   FaqSection,
@@ -14,6 +15,7 @@ export default function Home() {
         <HomeBreadcrumb />
       </div>
       <div className="root-spacing flex flex-col gap-12">
+        <GoodiesSection />
         <HowItWorksSection />
         <FigoAdvantagesSection />
         <FaqSection />

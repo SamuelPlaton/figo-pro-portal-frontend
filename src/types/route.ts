@@ -3,5 +3,4 @@ export enum ROUTES {
   SIGNIN = '/sign-in',
   SIGNUP = '/sign-up',
   ORDER = '/commander',
-  CHECKOUT = '/panier',
 }

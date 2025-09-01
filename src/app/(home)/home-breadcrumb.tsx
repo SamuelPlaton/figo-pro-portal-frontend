@@ -12,6 +12,10 @@ export default function HomeBreadcrumb() {
       value: 'hero',
     },
     {
+      label: 'Goodies Figo',
+      value: 'goodies',
+    },
+    {
       label: 'Comment ca marche ?',
       value: 'how-it-works',
     },
