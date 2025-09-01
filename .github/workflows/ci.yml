@@ -58,7 +58,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache-node.outputs.cache-hit != 'true'
-        run:  npm ci && npx install eslint && npx install
+        run:  npm ci
 
       - name: Run ESLint
         run: npm run lint:eslint

@@ -5,6 +5,8 @@ export interface Order {
   reference_id: string;
   products: Product[];
   address: Address;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CloudPrinterOrder {

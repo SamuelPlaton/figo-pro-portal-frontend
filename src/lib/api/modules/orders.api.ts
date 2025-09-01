@@ -1,6 +1,6 @@
 import { apiClient, ApiResponse } from '@/lib/api';
 import { AxiosResponse } from 'axios';
-import { Order, CloudPrinterOrder } from '@/types';
+import { Order } from '@/types';
 
 export interface PostOrderBody {
   address: {
@@ -15,8 +15,8 @@ export interface PostOrderBody {
   items: { id: string }[];
 }
 
-const getOrder = (reference: string): Promise<AxiosResponse<ApiResponse<CloudPrinterOrder>>> => {
-  return apiClient.get<ApiResponse<CloudPrinterOrder>>(`/orders/${reference}`).catch(err => {
+const getOrders = (): Promise<AxiosResponse<ApiResponse<Order[]>>> => {
+  return apiClient.get<ApiResponse<Order[]>>(`/orders`).catch(err => {
     console.error(err);
     throw err;
   });
@@ -30,6 +30,6 @@ const postOrder = (body: PostOrderBody): Promise<AxiosResponse<ApiResponse<Order
 };
 
 export const OrdersModule = {
-  getOrder,
+  getOrders,
   postOrder,
 };

@@ -1,5 +1,6 @@
 import { Product } from '@/types';
 import { Button, Icon } from '@/components';
+import { getDisplayDate } from '@/utils/date';
 
 interface ProductItemProps {
   onClick: () => void;
@@ -8,13 +9,6 @@ interface ProductItemProps {
 }
 
 export default function ProductItem({ onClick, product, isAlreadyAdded }: ProductItemProps) {
-  const getDisplayDate = (date: string) => {
-    return new Date(date).toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
-  };
   const cannotReorder = false;
   return (
     <div className="flex flex-col basis-full md:basis-auto gap-4 min-w-[260px]">

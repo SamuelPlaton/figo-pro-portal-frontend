@@ -1,5 +1,5 @@
 import { Order } from '@/types';
-import { CheckoutResumeItem, CheckoutTotalPrice } from '@/app/commander/index';
+import { OrderTotalPrice, ProductListItem } from '@/components';
 
 interface CheckoutSuccessProps {
   order: Order;
@@ -18,7 +18,7 @@ export default function CheckoutSuccess({ order }: CheckoutSuccessProps) {
       </div>
       <div className="mb-4">
         {order.products.map((item, key) => (
-          <CheckoutResumeItem
+          <ProductListItem
             key={key}
             product={item}
             className="py-4 border-y border-neutral-lower"
@@ -27,7 +27,7 @@ export default function CheckoutSuccess({ order }: CheckoutSuccessProps) {
       </div>
       <div className="font-bold flex flex-row justify-between gap-2 mb-6">
         <span>Sous total</span>
-        <CheckoutTotalPrice order={order} />
+        <OrderTotalPrice order={order} />
       </div>
       <div className="flex flex-col text-neutral-low">
         <span className="font-bold mb-2 text-black">Informations de livraison</span>

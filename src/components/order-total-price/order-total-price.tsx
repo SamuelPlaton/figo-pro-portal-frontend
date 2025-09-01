@@ -1,12 +1,13 @@
 import { Checkout, Order, Product } from '@/types';
 import { Icon } from '@/components';
 
-interface CheckoutTotalPriceProps {
+interface OrderTotalPriceProps {
   checkout?: Checkout;
   order?: Order;
   products?: Product[];
 }
-export default function CheckoutTotalPrice({ checkout, order, products }: CheckoutTotalPriceProps) {
+
+export default function OrderTotalPrice({ checkout, order, products }: OrderTotalPriceProps) {
   const getTotalPrice = () => {
     if (checkout && products) {
       return checkout.items.reduce(
@@ -19,7 +20,7 @@ export default function CheckoutTotalPrice({ checkout, order, products }: Checko
   };
 
   return (
-    <div className="flex flex-row gap-1">
+    <div className="flex flex-row items-center gap-1">
       <Icon name="figoCoin" />
       <span>{getTotalPrice()}</span>
     </div>

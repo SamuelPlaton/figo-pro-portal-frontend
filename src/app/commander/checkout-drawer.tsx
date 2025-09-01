@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import { Drawer } from '@/components';
 import { Checkout, CheckoutItem, Order, Product, ROUTES } from '@/types';
-import { CheckoutForm, CheckoutResume } from '@/app/commander';
-import CheckoutSuccess from '@/app/commander/checkout-success';
+import { CheckoutForm, CheckoutResume, CheckoutSuccess } from '@/app/commander';
 import { useRouter } from 'next/navigation';
 
 interface CheckoutDrawerProps {

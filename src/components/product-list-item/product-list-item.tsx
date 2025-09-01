@@ -2,17 +2,13 @@ import { Product } from '@/types';
 import { Icon } from '@/components';
 import clsx from 'clsx';
 
-interface CheckoutResumeItemProps {
+interface ProductListItemProps {
   product?: Product;
   className?: string;
   onRemove?: () => void;
 }
 
-export default function CheckoutResumeItem({
-  product,
-  className,
-  onRemove,
-}: CheckoutResumeItemProps) {
+export default function ProductListItem({ product, className, onRemove }: ProductListItemProps) {
   if (!product) return null;
   const classNames = clsx('flex flex-row gap-4 justify-between max-w-[600px]', className);
   return (
