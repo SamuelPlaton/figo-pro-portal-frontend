@@ -1,4 +1,3 @@
-'use client';
 import { Metadata } from 'next';
 import OrderPageCore from '@/app/commander/_client';
 
