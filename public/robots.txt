@@ -1,0 +1,9 @@
+# Allow bots to cross website
+User-agent: *
+Allow: /
+
+# Bloque les éventuelles pages sensibles
+Disallow: /404
+
+# Indique le sitemap
+Sitemap: https://veterinaires.figo.fr/sitemap.xml

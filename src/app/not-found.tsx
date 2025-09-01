@@ -2,6 +2,12 @@ import React from 'react';
 import { ROUTES } from '@/types';
 import { Button } from '@/components';
 import Head from 'next/head';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Figo - 404',
+  description: 'Contenu indisponible',
+};
 
 const NotFoundPage: React.FC = () => {
   return (
