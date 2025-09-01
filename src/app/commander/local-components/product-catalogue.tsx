@@ -1,5 +1,5 @@
 import { Checkout, Product } from '@/types';
-import { ProductItem, ProductItemSkeleton } from '@/app/commander';
+import { ProductItem, ProductItemSkeleton } from '@/app/commander/local-components/index';
 
 interface ProductCatalogueProps {
   products?: Product[];

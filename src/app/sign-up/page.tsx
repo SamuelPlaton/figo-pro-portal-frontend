@@ -1,5 +1,5 @@
 import { HeroAuth } from '@/components';
-import { SignUpForm } from '@/app/sign-up';
+import { SignUpForm } from '@/app/sign-up/local-components';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
