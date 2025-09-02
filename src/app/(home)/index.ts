@@ -4,6 +4,7 @@ export { default as GoodiesSection } from './goodies-section';
 export { default as Hero } from './hero';
 export { default as HomeBreadcrumb } from './home-breadcrumb';
 export { default as HowItWorksSection } from './how-it-works-section';
+export { default as OfflineOverlay } from './offline-overlay';
 export { default as OrderCard } from './order-card';
 export { default as OrderHistoryDrawer } from './order-history-drawer';
 export { default as PromoTrackingCard } from './promo-tracking-card';
