@@ -21,9 +21,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [closing, setClosing] = useState<number[]>([]);
 
   const removeToast = useCallback((id: number) => {
-    // Ajoute l'id à "closing" → déclenche l’anim fade-out
+    // Adding the id at closing triggers the fade out animation
     setClosing(prev => [...prev, id]);
-    // Attends la durée de l'anim avant suppression
+    // Wait for animation duration before set closing
     setTimeout(() => {
       setToasts(prev => prev.filter(t => t.id !== id));
       setClosing(prev => prev.filter(cid => cid !== id));
