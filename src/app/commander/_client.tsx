@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   description: 'Commandez des goodies et flyers avec vos crédits Figo',
 };
 
-// todo: offline overlay
 // todo: make A4 order work on CloudPrinter
 export default function OrderPageCore() {
   const { addToast } = useToast();
@@ -62,7 +61,7 @@ export default function OrderPageCore() {
     setCheckout({ items: [] });
   };
 
-  // todo: rework header
+  // todo: rework header (Wait for FINAL UX rules)
 
   return (
     <>
