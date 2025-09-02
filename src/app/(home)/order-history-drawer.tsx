@@ -4,17 +4,24 @@ import { Order } from '@/types';
 import { api } from '@/lib/api';
 import { Drawer } from '@/components';
 import { OrderCard } from '@/app/(home)/index';
+import { useToast } from '@/context/toast-context';
 
 interface OrderHistoryDrawerProps {
   onClose: () => void;
   isOpen: boolean;
 }
 export default function OrderHistoryDrawer({ isOpen, onClose }: OrderHistoryDrawerProps) {
+  const { addToast } = useToast();
   const [orders, setOrders] = useState<Order[]>();
 
   useEffect(() => {
     const getData = () => {
-      return api.orders.getOrders().then(orders => setOrders(orders.data.data));
+      return api.orders
+        .getOrders()
+        .then(orders => setOrders(orders.data.data))
+        .catch(() => {
+          addToast('Une erreur est survenue', 'error');
+        });
     };
     getData();
   }, []);

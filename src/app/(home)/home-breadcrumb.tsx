@@ -6,6 +6,7 @@ import { FreeMode } from 'swiper/modules';
 
 export default function HomeBreadcrumb() {
   const [activeBreadcrumb, setActiveBreadcrumb] = useState<number>(0);
+
   const breadcrumbOptions = [
     {
       label: 'Accueil',

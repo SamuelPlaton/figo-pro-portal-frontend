@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Checkout, Order, User } from '@/types';
 import { Button, Input } from '@/components';
 import { api } from '@/lib/api';
+import { useToast } from '@/context/toast-context';
 
 interface CheckoutFormProps {
   checkout: Checkout;
@@ -19,9 +20,9 @@ type FormData = {
 };
 
 export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps) {
+  const { addToast } = useToast();
   // todo: retrieve user from store
   // todo: implement auth guard
-  // todo: implement toast
   const user: User = {
     id: '6fba0bb9-fa6d-4112-8ac7-0ed67ef66592',
     email: 'platonsam02@gmail.com',
@@ -61,6 +62,10 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
       })
       .then(response => {
         onSuccess(response.data.data);
+        addToast('Commande validée', 'success');
+      })
+      .catch(() => {
+        addToast('Une erreur est survenue, veuillez réessayer', 'error');
       });
   };
 

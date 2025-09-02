@@ -1,10 +1,12 @@
 @import 'tailwindcss';
 @import './fonts/fonts.css';
 
+/** APP SPACING */
 .root-spacing {
   @apply px-4 md:px-16 lg:px-44;
 }
 
+/** GLOBAL THEME */
 @theme {
   --color-primary: #01313d;
   --color-gray: #cbd5e1;
@@ -18,7 +20,6 @@
   --font-primary: 'IvyEpic', Arial, sans-serif;
   --font-heading: 'IvyPresto', 'IvyEpic', sans-serif;
 }
-
 body {
   font-family: var(--font-primary, 'IvyEpic');
 }
@@ -50,12 +51,43 @@ h4 {
   @apply text-xl;
 }
 
+/** TOAST */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out-down {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out forwards;
+}
+@utility animate-fade-out-down {
+  animation: fade-out-down 0.3s ease-in forwards;
+}
+
+/** CAROUSEL */
 .swiper-wrapper {
   display: flex !important;
   flex-direction: row !important;
 }
 
 .swiper-container {
-  padding-bottom: 0; /* par défaut */
+  padding-bottom: 0;
   padding-right: 1rem;
 }
