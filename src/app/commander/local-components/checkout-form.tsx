@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Checkout, Order, User } from '@/types';
-import { Button, Input } from '@/components';
+import { Button, Input, Select } from '@/components';
 import { api } from '@/lib/api';
 import { useToast } from '@/context/toast-context';
 
@@ -14,6 +14,8 @@ type FormData = {
   lastName: string;
   company: string;
   email: string;
+  phoneIndicative: string;
+  phoneNumber: string;
   street1: string;
   city: string;
   zip: string;
@@ -26,7 +28,7 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
   const user: User = {
     id: '6fba0bb9-fa6d-4112-8ac7-0ed67ef66592',
     email: 'platonsam02@gmail.com',
-    phone_indicative: '+33',
+    phone_indicative: '+41',
     phone_number: '627871699',
     address: {
       id: '6fba0bb9-fa6d-4112-8ac7-0ed67ef66592',
@@ -49,6 +51,8 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
       lastName: user.address.last_name,
       email: user.email,
       street1: user.address.street1,
+      phoneIndicative: user.phone_indicative,
+      phoneNumber: user.phone_number,
       zip: user.address.zip,
       city: user.address.city,
     },
@@ -102,6 +106,33 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
           error={errors.email?.message}
           {...register('email', { required: 'Ce champ est requis' })}
         />
+        <div className="flex flex-row items-end justify-between gap-2">
+          <Select
+            options={[
+              { value: '+33', label: '🇫🇷 +33' },
+              { value: '+32', label: '🇧🇪 +32' },
+              { value: '+41', label: '🇨🇭 +41' },
+              { value: '+352', label: '🇱🇺 +352' },
+              { value: '+377', label: '🇲🇨 +377' },
+              { value: '+1', label: '🇨🇦 +1' },
+              { value: '+213', label: '🇩🇿 +213' },
+              { value: '+212', label: '🇲🇦 +212' },
+              { value: '+216', label: '🇹🇳 +216' },
+              { value: '+221', label: '🇸🇳 +221' },
+            ]}
+            label="N° de téléphone"
+            error={errors.phoneIndicative?.message}
+            {...register('phoneIndicative', { required: 'Ce champ est requis' })}
+          />
+          <Input
+            placeholder="06 12 34 56 78"
+            autoComplete="tel"
+            error={errors.phoneNumber?.message}
+            {...register('phoneNumber', { required: 'Ce champ est requis' })}
+            className="flex-grow"
+          />
+        </div>
+
         <Input
           label="Adresse"
           placeholder="Ex: 12 rue des vétérinaires"

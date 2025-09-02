@@ -10,6 +10,7 @@ interface InputProps {
   type?: string;
   autoComplete?: string;
   error?: string;
+  className?: string;
 }
 
 export default function Input({
@@ -21,6 +22,7 @@ export default function Input({
   type = 'text',
   autoComplete = 'off',
   error,
+  className,
   ...props
 }: InputProps) {
   const classNames = clsx(
@@ -38,7 +40,7 @@ export default function Input({
   const labelClassNames = clsx('font-bold text-primary mb-2', { 'text-[#94A3B8]': disabled });
 
   return (
-    <div>
+    <div className={className}>
       {label && (
         <label htmlFor={name} className={labelClassNames}>
           {label}
