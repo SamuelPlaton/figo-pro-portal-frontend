@@ -76,9 +76,9 @@ const buttonClassNames = {
   global:
     'rounded-full font-bold flex flex-row justify-center items-center gap-2 cursor-pointer min-h-6',
   sizes: {
-    sm: 'px-4 py-2',
-    md: 'px-4 py-2.5',
-    lg: 'px-6 py-3',
+    sm: 'px-4 py-2 min-h-[40px]',
+    md: 'px-4 py-2.5 min-h-[44px]',
+    lg: 'px-6 py-3 min-h-[48px]',
   },
   variants: {
     primary: 'bg-primary text-white',

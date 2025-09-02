@@ -8,6 +8,7 @@ import {
   ProductCatalogue,
 } from '@/app/commander/local-components';
 import { Metadata } from 'next';
+import { useToast } from '@/context/toast-context';
 
 export const metadata: Metadata = {
   title: 'Figo - Commander',
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
 };
 
 // todo: offline overlay
-// todo: implement toast (cf. tailwind)
 // todo: make A4 order work on CloudPrinter
 export default function OrderPageCore() {
+  const { addToast } = useToast();
   const [products, setProducts] = useState<Product[]>();
   const [checkout, setCheckout] = useState<Checkout>({ items: [] });
   const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
@@ -25,7 +26,12 @@ export default function OrderPageCore() {
   // Load Checkout from Local Storage, Products from API
   useEffect(() => {
     const loadProducts = async () => {
-      return api.products.getProducts().then(products => setProducts(products.data));
+      return api.products
+        .getProducts()
+        .then(products => setProducts(products.data))
+        .catch(() => {
+          addToast('Une erreur est survenue', 'error');
+        });
     };
     loadProducts();
 
