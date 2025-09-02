@@ -23,6 +23,7 @@ export default function PromoTrackingCard({ promoCode, className }: PromoTrackin
   };
 
   const handleShare = async () => {
+    // todo: stylised share section
     if (navigator.share) {
       try {
         await navigator.share({
@@ -45,7 +46,7 @@ export default function PromoTrackingCard({ promoCode, className }: PromoTrackin
   return (
     <div className={containerClassNames}>
       {/* Promo code share section */}
-      <div className="">
+      <div>
         <span className="text-primary font-semibold">Votre lien unique</span>
         <div className="rounded-2xl border border-gray flex flex-row justify-between gap-4 items-center p-3 mt-1">
           <span>{getPromoLink()}</span>
