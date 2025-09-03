@@ -7,7 +7,7 @@ import { useState } from 'react';
 export default function GoodiesSection() {
   const [isOrderHistoryOpen, setIsOrderHistoryOpen] = useState(false);
 
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   return (
     <div id="goodies">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 gap-4">

@@ -34,7 +34,7 @@ export default function Drawer({ children, isOpen, onClose, className }: DrawerP
       {/* Drawer */}
       <div
         className={`fixed top-0 right-0 h-full bg-white shadow-lg transform transition-transform duration-300 z-50
-        w-full sm:w-1/3 max-w-[700px] p-6 flex flex-col overflow-y-scroll
+        w-full sm:w-2/3 md:1/2 lg:1/3 max-w-[700px] p-6 flex flex-col overflow-y-auto
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Close Button */}
