@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 import { Button } from '@/components';
+import LinkSharingDrawer from '@/app/(home)/link-sharing-drawer';
+import { useToast } from '@/context/toast-context';
 
 interface PromoTrackingCardProps {
   promoCode: string;
@@ -10,33 +12,16 @@ interface PromoTrackingCardProps {
 }
 
 export default function PromoTrackingCard({ promoCode, className }: PromoTrackingCardProps) {
-  const [copied, setCopied] = useState(false);
+  const { addToast } = useToast();
+  const [linkSharingDrawerOpen, setLinkSharingDrawerOpen] = useState(false);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText('https://' + getPromoLink());
-    setCopied(true);
-    setTimeout(() => setCopied(false), 200);
+    addToast('Lien copié dans le presse-papier', 'success');
   };
 
   const getPromoLink = () => {
     return `www.figo.fr/${promoCode}`;
-  };
-
-  const handleShare = async () => {
-    // todo: stylised share section
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Mon super site',
-          text: 'Viens voir ce site, il est génial !',
-          url: 'https://' + getPromoLink(),
-        });
-      } catch (err) {
-        console.log('Sharing failed', err);
-      }
-    } else {
-      alert("Le partage n'est pas supporté par votre navigateur.");
-    }
   };
 
   const containerClassNames = clsx(
@@ -50,15 +35,22 @@ export default function PromoTrackingCard({ promoCode, className }: PromoTrackin
         <span className="text-primary font-semibold">Votre lien unique</span>
         <div className="rounded-2xl border border-gray flex flex-row justify-between gap-4 items-center p-3 mt-1">
           <span>{getPromoLink()}</span>
-          <button
-            className={`underline cursor-pointer ${copied ? 'font-semibold' : ''}`}
-            onClick={handleCopy}
-          >
+          <button className="underline cursor-pointer" onClick={handleCopy}>
             Copier
           </button>
         </div>
-        <Button label={'Partager'} onClick={handleShare} className="mt-2 w-full" size="lg" />
+        <Button
+          label={'Partager'}
+          onClick={() => setLinkSharingDrawerOpen(true)}
+          className="mt-2 w-full"
+          size="lg"
+        />
       </div>
+      <LinkSharingDrawer
+        onClose={() => setLinkSharingDrawerOpen(false)}
+        isOpen={linkSharingDrawerOpen}
+        link={getPromoLink()}
+      />
     </div>
   );
 }
