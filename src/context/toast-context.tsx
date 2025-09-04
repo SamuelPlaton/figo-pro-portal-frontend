@@ -6,16 +6,16 @@ import { FiCheckCircle, FiXCircle, FiInfo, FiX } from 'react-icons/fi';
 export type Toast = {
   id: number;
   message: string;
+  title?: string;
   type?: 'success' | 'error' | 'info';
   duration?: number;
 };
 
 type ToastContextType = {
-  addToast: (message: string, type?: Toast['type'], duration?: number) => void;
+  addToast: (message: string, type?: Toast['type'], title?: string, duration?: number) => void;
 };
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [closing, setClosing] = useState<number[]>([]);
@@ -31,9 +31,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addToast = useCallback(
-    (message: string, type: Toast['type'] = 'info', duration = 3000) => {
+    (message: string, type: Toast['type'] = 'info', title?: string, duration = 3000) => {
       const id = Date.now();
-      setToasts(prev => [...prev, { id, message, type, duration }]);
+      setToasts(prev => [...prev, { id, message, title, type, duration }]);
       setTimeout(() => removeToast(id), duration);
     },
     [removeToast],
@@ -49,16 +49,19 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           return (
             <div
               key={toast.id}
-              className={`flex items-center gap-3 w-80 max-w-sm p-4 rounded-lg shadow-lg border border-neutral-lower
+              className={`flex items-start gap-3 w-80 sm:w-96 max-w-sm p-4 rounded-lg shadow-lg border border-neutral-lower
                 bg-white text-neutral-800 transition-all
                 ${isClosing ? 'animate-fade-out-down' : 'animate-fade-in-up'}`}
             >
-              <div className="text-xl">
+              <div className="text-xl pt-1">
                 {toast.type === 'success' && <FiCheckCircle className="text-green-500" />}
                 {toast.type === 'error' && <FiXCircle className="text-red-500" />}
                 {toast.type === 'info' && <FiInfo className="text-blue-500" />}
               </div>
-              <div className="flex-1">{toast.message}</div>
+              <div className="flex-1 flex flex-col">
+                {toast.title && <span className="font-bold">{toast.title}</span>}
+                <span>{toast.message}</span>
+              </div>
               <button
                 onClick={() => removeToast(toast.id)}
                 className="text-gray-400 hover:text-gray-600 transition cursor-pointer"

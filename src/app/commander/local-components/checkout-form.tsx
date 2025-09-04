@@ -66,7 +66,11 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
       })
       .then(response => {
         onSuccess(response.data.data);
-        addToast('Commande validée', 'success');
+        addToast(
+          'Votre commande a bien été enregistrée et sera bientôt traitée.',
+          'success',
+          'Commande validée',
+        );
       })
       .catch(() => {
         addToast('Une erreur est survenue, veuillez réessayer', 'error');

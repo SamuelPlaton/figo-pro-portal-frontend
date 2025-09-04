@@ -61,7 +61,7 @@ export default function OrderPageCore() {
     setCheckout({ items: [] });
   };
 
-  // todo: rework header (Wait for FINAL UX rules)
+  // todo: rework header (!!!)
 
   return (
     <>
