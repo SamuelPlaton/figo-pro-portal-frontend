@@ -1,3 +1,4 @@
+export * from './autocomplete-input';
 export * from './button';
 export * from './collapsible';
 export * from './drawer';

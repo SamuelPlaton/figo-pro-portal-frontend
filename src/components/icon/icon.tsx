@@ -7,8 +7,10 @@ import ClockIcon from '@/components/icon/icons/clock';
 import ExternalLinkIcon from '@/components/icon/icons/external-link';
 import FigoCheckIcon from '@/components/icon/icons/figo-check.svg';
 import FigoCoinIcon from '@/components/icon/icons/figo-coin';
+import LockIcon from '@/components/icon/icons/lock';
 import PackageIcon from '@/components/icon/icons/package';
 import PlusIcon from '@/components/icon/icons/plus.svg';
+import SearchLoopIcon from '@/components/icon/icons/search-loop';
 import ShoppingCartIcon from '@/components/icon/icons/shopping-cart';
 import XIcon from '@/components/icon/icons/x';
 
@@ -21,8 +23,10 @@ export type IconName =
   | 'externalLink'
   | 'figoCheck'
   | 'figoCoin'
+  | 'lock'
   | 'package'
   | 'plus'
+  | 'searchLoop'
   | 'shoppingCart'
   | 'x';
 
@@ -41,8 +45,10 @@ const icons: Record<IconName, React.FC<IconProps>> = {
   externalLink: ExternalLinkIcon,
   figoCheck: FigoCheckIcon,
   figoCoin: FigoCoinIcon,
+  lock: LockIcon,
   package: PackageIcon,
   plus: PlusIcon,
+  searchLoop: SearchLoopIcon,
   shoppingCart: ShoppingCartIcon,
   x: XIcon,
 };

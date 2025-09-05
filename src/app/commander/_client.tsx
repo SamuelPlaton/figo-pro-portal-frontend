@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   description: 'Commandez des goodies et flyers avec vos crédits Figo',
 };
 
-// todo: make A4 order work on CloudPrinter
 export default function OrderPageCore() {
   const { addToast } = useToast();
   const [products, setProducts] = useState<Product[]>();
