@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
+import { IconName } from '@/components/icon/icon';
+import { Icon } from '@/components';
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
   placeholder?: string;
@@ -11,6 +13,7 @@ interface InputProps {
   autoComplete?: string;
   error?: string;
   className?: string;
+  appendIcon?: IconName;
 }
 
 export default function Input({
@@ -23,10 +26,12 @@ export default function Input({
   autoComplete = 'off',
   error,
   className,
+  appendIcon,
   ...props
 }: InputProps) {
   const classNames = clsx(
     'border border-gray rounded-2xl px-3 py-3.5 w-full',
+    { 'pl-10': appendIcon },
     { 'hover:border-neutral-low': !disabled },
     { 'focus:border-neutral-low focus:shadow-[0_0_0_3px_#B3C1C5] focus:outline-none': !disabled },
     { 'bg-neutral-lower': disabled },
@@ -46,17 +51,24 @@ export default function Input({
           {label}
         </label>
       )}
-      <input
-        id={name}
-        name={name}
-        className={classNames}
-        placeholder={placeholder}
-        required={required}
-        type={type}
-        autoComplete={disabled ? 'off' : autoComplete}
-        disabled={disabled}
-        {...props}
-      />
+      <div className="relative">
+        {appendIcon && (
+          <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+            <Icon name={appendIcon} className="w-5 h-5" />
+          </span>
+        )}
+        <input
+          id={name}
+          name={name}
+          className={classNames}
+          placeholder={placeholder}
+          required={required}
+          type={type}
+          autoComplete={disabled ? 'off' : autoComplete}
+          disabled={disabled}
+          {...props}
+        />
+      </div>
     </div>
   );
 }

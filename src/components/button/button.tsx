@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { IconName } from '@/components/icon/icon';
 import { Icon, Spinner } from '@/components';
 
-interface ButtonProps {
+export interface ButtonProps {
   label?: string;
   size?: 'sm' | 'md' | 'lg';
   onClick?: () => void;

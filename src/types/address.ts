@@ -9,3 +9,11 @@ export interface Address {
   zip: string;
   city: string;
 }
+
+export interface AddressForm {
+  street1: string;
+  street2?: string;
+  company?: string;
+  zip: string;
+  city: string;
+}

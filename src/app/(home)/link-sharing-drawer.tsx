@@ -19,10 +19,6 @@ interface LinkOption {
 export default function LinkSharingDrawer({ onClose, isOpen, link }: LinkSharingDrawerProps) {
   const { addToast } = useToast();
 
-  const getEncodedUri = () => {
-    return encodeURIComponent(link);
-  };
-
   const getEncodedSubject = () => {
     return encodeURIComponent("Découvrez l'assurance Figo !");
   };

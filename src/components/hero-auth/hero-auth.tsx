@@ -3,7 +3,7 @@ import { Icon } from '@/components';
 export default function HeroAuth() {
   return (
     <div
-      className="relative rounded-4xl overflow-hidden w-[480px] h-[600px]"
+      className="hidden md:block relative rounded-4xl overflow-hidden w-[480px] h-[600px]"
       style={{
         background:
           "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 31.29%, rgba(0, 0, 0, 0.90) 67.09%), url('/assets/vet-illustration-2.jpg') lightgray 0px -278.206px / 100% 147.977% no-repeat",
