@@ -2,18 +2,40 @@
 
 import { Button, Input } from '@/components';
 import { useForm } from 'react-hook-form';
+import { api } from '@/lib/api';
+import { useToast } from '@/context/toast-context';
+import { ROUTES } from '@/types';
+import { useRouter } from 'next/navigation';
 
 type FormData = { password: string; email: string };
 
 export default function SignInForm() {
+  const { addToast } = useToast();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
+  // todo: api auth guard
+  // todo: refresh token on 401 from api auto
+  // todo: auto get user from api during requests
 
+  // todo: remove auto query params email & password from query params (found http://localhost:3000/sign-in?email=new-admin%40binch.me&password=password)
   const onSubmit = async (data: FormData) => {
-    console.log('DATA', data);
+    return api.auth
+      .login(data)
+      .then(() => {
+        addToast('Connexion réussie', 'success');
+        router.push(ROUTES.HOME);
+      })
+      .catch(error => {
+        if (error.status === 403) {
+          addToast('Email ou mot de passe invalide', 'error');
+        } else {
+          addToast('Une erreur est survenue', 'error');
+        }
+      });
   };
 
   return (

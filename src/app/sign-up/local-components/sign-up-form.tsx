@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { PlacesAutocomplete, ProgressBar } from '@/app/sign-up/local-components/index';
 import { AddressForm, ROUTES } from '@/types';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/context/toast-context';
+import { api } from '@/lib/api';
 
 type AddressFormData = {
   street1: string;
@@ -21,12 +23,13 @@ type ContactFormData = {
 };
 
 type IdentityFormData = {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
 };
 
 export default function SignUpForm() {
   const router = useRouter();
+  const { addToast } = useToast();
   const [autocompleteMode, setAutocompleteMode] = useState<'place' | 'address'>('place');
   const [addressData, setAddressData] = useState<AddressFormData>();
   const [contactData, setContactData] = useState<ContactFormData>();
@@ -52,6 +55,8 @@ export default function SignUpForm() {
   } = useForm<IdentityFormData>();
 
   // todo: handle set autocomplete empty
+  // todo: password strength
+  // todo: favicon !!!
   const onAddressChange = (address: Partial<AddressForm>) => {
     if (address.street1)
       setAddressFormValue('street1', address.street1 ?? '', { shouldValidate: true });
@@ -61,7 +66,7 @@ export default function SignUpForm() {
     setAddressData(address as AddressFormData);
   };
 
-  // disable button managementon address step
+  // disable button management on address step
   const handleDisabled = () => {
     const [street1, city, zip] = watchAddressForm(['street1', 'city', 'zip']);
     if (currentStep === 1 && (!street1 || !city || !zip)) {
@@ -76,11 +81,51 @@ export default function SignUpForm() {
   };
 
   const onSubmitIdentityForm = async (data: IdentityFormData) => {
-    console.log('CREATE ACCOUNT', {
-      identity: data,
-      contact: contactData,
-      address: addressData,
+    if (!contactData || !addressData) {
+      addToast("Informations d'adresse ou de contact manquantes", 'error');
+      return;
+    }
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: contactData?.email as string,
+        password: 'SAmuel..07012000',
+        given_name: data.firstName ? data.firstName : undefined,
+        family_name: data.lastName ? data.lastName : undefined,
+        name: data.firstName
+          ? `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}`
+          : undefined,
+        phone_number: contactData?.phoneNumber
+          ? `${contactData.phoneIndicative} ${contactData.phoneNumber}`
+          : undefined,
+      }),
     });
+    const resBody = await res.json();
+    console.log('BODY', resBody);
+    if (res.status >= 400) {
+      addToast(
+        resBody?.error.code === 'invalid_signup' ? 'Un compte existe déjà pour cet email' : '',
+        'error',
+        'Une erreur est survenue',
+      );
+      return;
+    }
+    return api.users
+      .postUser({
+        externalId: resBody._id as string,
+        email: contactData.email,
+        address: {
+          ...addressData,
+          ...contactData,
+        },
+      })
+      .then(() => {
+        addToast('Vous pouvez désormais vous connecter', 'success', 'Compte crée avec succès');
+        router.push(ROUTES.SIGNIN);
+      })
+      .catch(() => {
+        addToast('Veuillez contacter le support', 'error', 'Une erreur est survenue');
+      });
   };
 
   type NavigationSectionProps = {

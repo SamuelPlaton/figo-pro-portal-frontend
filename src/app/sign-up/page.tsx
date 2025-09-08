@@ -3,8 +3,8 @@ import { SignUpForm } from '@/app/sign-up/local-components';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Figo - Se connecter',
-  description: 'Connectez-vous à votre portail professionnel',
+  title: 'Figo - Inscription',
+  description: 'Inscrivez-vous',
 };
 
 export default function Login() {

@@ -6,6 +6,8 @@ export interface PostOrderBody {
   address: {
     firstName: string;
     lastName: string;
+    phoneNumber?: string;
+    phoneIndicative?: string;
     company: string;
     email: string;
     street1: string;
