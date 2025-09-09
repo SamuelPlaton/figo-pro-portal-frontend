@@ -8,6 +8,7 @@ import { AddressForm, ROUTES } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/context/toast-context';
 import { api } from '@/lib/api';
+import { withGuestGuard } from '@/guards';
 
 type AddressFormData = {
   street1: string;
@@ -27,7 +28,7 @@ type IdentityFormData = {
   lastName?: string;
 };
 
-export default function SignUpForm() {
+const SignUpForm = () => {
   const router = useRouter();
   const { addToast } = useToast();
   const [autocompleteMode, setAutocompleteMode] = useState<'place' | 'address'>('place');
@@ -56,7 +57,6 @@ export default function SignUpForm() {
 
   // todo: handle set autocomplete empty
   // todo: password strength
-  // todo: favicon !!!
   const onAddressChange = (address: Partial<AddressForm>) => {
     if (address.street1)
       setAddressFormValue('street1', address.street1 ?? '', { shouldValidate: true });
@@ -101,7 +101,6 @@ export default function SignUpForm() {
       }),
     });
     const resBody = await res.json();
-    console.log('BODY', resBody);
     if (res.status >= 400) {
       addToast(
         resBody?.error.code === 'invalid_signup' ? 'Un compte existe déjà pour cet email' : '',
@@ -271,4 +270,6 @@ export default function SignUpForm() {
       )}
     </div>
   );
-}
+};
+
+export default SignUpForm;

@@ -13,6 +13,10 @@ export default function HomeBreadcrumb() {
       value: 'hero',
     },
     {
+      label: 'Offres réservées aux partenaires',
+      value: 'partners-offers',
+    },
+    {
       label: 'Goodies Figo',
       value: 'goodies',
     },

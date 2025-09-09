@@ -6,8 +6,8 @@ interface OfflineOverlayProps {
 }
 export default function OfflineOverlay({ label }: OfflineOverlayProps) {
   return (
-    <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center backdrop-blur-sm bg-white/50 p-8">
-      <span>
+    <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center backdrop-blur-sm bg-gradient-to-b to-white p-8">
+      <span className="text-center">
         Pour <b>{label}</b>
       </span>
       <span className="mb-4">merci de vous identifier :</span>

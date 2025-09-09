@@ -6,10 +6,11 @@ import { api } from '@/lib/api';
 import { useToast } from '@/context/toast-context';
 import { ROUTES } from '@/types';
 import { useRouter } from 'next/navigation';
+import { withGuestGuard } from '@/guards';
 
 type FormData = { password: string; email: string };
 
-export default function SignInForm() {
+const SignInForm = () => {
   const { addToast } = useToast();
   const router = useRouter();
   const {
@@ -17,11 +18,8 @@ export default function SignInForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
-  // todo: api auth guard
   // todo: refresh token on 401 from api auto
-  // todo: auto get user from api during requests
 
-  // todo: remove auto query params email & password from query params (found http://localhost:3000/sign-in?email=new-admin%40binch.me&password=password)
   const onSubmit = async (data: FormData) => {
     return api.auth
       .login(data)
@@ -63,7 +61,9 @@ export default function SignInForm() {
       <span className="text-neutral-low text-center my-6">- Ou se connecter avec -</span>
       <Button label={"S'inscrire avec Google"} variant="outline" />
       <Button label={"S'inscrire avec Microsoft"} variant="outline" />
-      <Button label={'Créer un compte'} variant="outline" />
+      <Button label={'Créer un compte'} variant="outline" href={ROUTES.SIGNUP} />
     </div>
   );
-}
+};
+
+export default SignInForm;

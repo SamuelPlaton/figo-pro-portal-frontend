@@ -8,4 +8,5 @@ export { default as LinkSharingDrawer } from './link-sharing-drawer';
 export { default as OfflineOverlay } from './offline-overlay';
 export { default as OrderCard } from './order-card';
 export { default as OrderHistoryDrawer } from './order-history-drawer';
+export { default as PartnersOffers } from './partners-offers';
 export { default as PromoTrackingCard } from './promo-tracking-card';

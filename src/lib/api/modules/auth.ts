@@ -23,9 +23,18 @@ export interface LoginResponse {
   status: number;
 }
 
+export interface AuthMeResponse {
+  authenticated: boolean;
+  error?: string;
+  user?: {
+    sub: string;
+    email: string;
+    name: string;
+  };
+}
+
 const signup = async (body: SignUpBody): Promise<AxiosResponse<SignUpResponse>> => {
   const res = await axios.post<SignUpResponse>('/api/auth/signup', body);
-  console.log('RES', res.data);
   return res;
 };
 
@@ -33,7 +42,20 @@ const login = async (body: LoginBody): Promise<AxiosResponse<LoginResponse>> => 
   return axios.post<LoginResponse>('/api/auth/login', body);
 };
 
+const isConnected = async (): Promise<boolean> => {
+  return axios
+    .get<AuthMeResponse>('/api/auth/me')
+    .then(response => response.data.authenticated)
+    .catch(() => false);
+};
+
+const logout = async (): Promise<void> => {
+  return axios.post('/api/auth/logout');
+};
+
 export const AuthModule = {
   signup,
   login,
+  isConnected,
+  logout,
 };

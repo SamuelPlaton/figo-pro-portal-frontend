@@ -9,13 +9,14 @@ import {
 } from '@/app/commander/local-components';
 import { Metadata } from 'next';
 import { useToast } from '@/context/toast-context';
+import { withAuthGuard } from '@/guards';
 
 export const metadata: Metadata = {
   title: 'Figo - Commander',
   description: 'Commandez des goodies et flyers avec vos crédits Figo',
 };
 
-export default function OrderPageCore() {
+const OrderPageCore = () => {
   const { addToast } = useToast();
   const [products, setProducts] = useState<Product[]>();
   const [checkout, setCheckout] = useState<Checkout>({ items: [] });
@@ -84,4 +85,6 @@ export default function OrderPageCore() {
       />
     </>
   );
-}
+};
+
+export default withAuthGuard(OrderPageCore);

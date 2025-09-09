@@ -5,15 +5,6 @@ import { serialize } from 'cookie';
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
-    console.log('BODY', {
-      grant_type: 'password',
-      username: email,
-      password: password,
-      audience: process.env.AUTH0_AUDIENCE,
-      scope: 'openid profile email offline_access',
-      client_id: process.env.AUTH0_CLIENT_ID,
-      client_secret: process.env.AUTH0_CLIENT_SECRET,
-    });
     const response = await axios.post(`${process.env.AUTH0_DOMAIN}/oauth/token`, {
       grant_type: 'password',
       username: email,
@@ -31,6 +22,7 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       path: '/',
       secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: expires_in, // en secondes
     });
 
@@ -38,7 +30,7 @@ export async function POST(req: NextRequest) {
       { status: 200 },
       {
         status: 200,
-        headers: { 'Set-Cookie': cookie },
+        headers: { 'Set-Cookie': cookie, 'Content-Type': 'application/json' },
       },
     );
     // eslint-disable-next-line

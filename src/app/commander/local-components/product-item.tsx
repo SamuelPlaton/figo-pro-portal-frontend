@@ -12,7 +12,7 @@ export default function ProductItem({ onClick, product, isAlreadyAdded }: Produc
   return (
     <div className="flex flex-col basis-full md:basis-auto gap-4 min-w-[260px]">
       <div
-        className={`w-full overflow-hidden relative bg-[#FDF5ED] p-8 rounded-2xl h-[260px] ${cannotReorder && 'border border-neutral-lower'}`}
+        className={`w-full overflow-hidden relative bg-cream-light p-8 rounded-2xl h-[260px] ${cannotReorder && 'border border-neutral-lower'}`}
       >
         <img
           src={`/assets/products/${product.external_reference}.png`}

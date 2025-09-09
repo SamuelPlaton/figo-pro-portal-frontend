@@ -23,8 +23,7 @@ type FormData = {
 
 export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps) {
   const { addToast } = useToast();
-  // todo: retrieve user from store
-  // todo: implement auth guard
+  // todo: retrieve user from api
   const user: User = {
     id: '6fba0bb9-fa6d-4112-8ac7-0ed67ef66592',
     email: 'platonsam02@gmail.com',

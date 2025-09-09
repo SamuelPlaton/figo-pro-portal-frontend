@@ -2,12 +2,34 @@
 
 import Image from 'next/image';
 import { Button, MobileNavigation } from '@/components';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { ROUTES } from '@/types';
+import { useEffect, useState } from 'react';
+import { api } from '@/lib/api';
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
 
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
+  // todo: use AuthContext so pages call this context, and refreshAuth on login & logout actions
+  useEffect(() => {
+    const getIsAuthenticated = () => {
+      return api.auth
+        .isConnected()
+        .then(response => setIsAuthenticated(response))
+        .catch(() => setIsAuthenticated(false));
+    };
+    getIsAuthenticated();
+  }, []);
+
+  const handleLogout = async () => {
+    await api.auth.logout();
+    router.replace(ROUTES.SIGNIN);
+  };
+
+  // todo: header call outer refs (panier, partager)
+  // todo: retrieve auth0 user metadata (is_validated_at, promo_code)
   return (
     <div className="flex flex-row justify-between m-4 md:mx-20 md:my-6">
       <div
@@ -33,13 +55,28 @@ export default function Header() {
       </div>
       {/* Desktop/Tablet navigation */}
       <div className="flex-row gap-6 hidden md:flex">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => console.log('contact')}
-          label="Nous contacter"
-        />
-        <Button size="sm" variant="primary" onClick={() => console.log('share')} label="Partager" />
+        {pathname === ROUTES.HOME && isAuthenticated && (
+          <>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => console.log('contact')}
+              label="Nous contacter"
+            />
+            <Button
+              size="sm"
+              variant="primary"
+              onClick={() => console.log('share')}
+              label="Partager"
+            />
+          </>
+        )}
+        {isAuthenticated === true && (
+          <Button appendIcon="userCircle" variant="ghost" onClick={handleLogout} size="xl" />
+        )}
+        {isAuthenticated === false && (
+          <Button size="sm" variant="primary" label="Se connecter" href={ROUTES.SIGNIN} />
+        )}
       </div>
       {/* Mobile navigation */}
       <MobileNavigation />
