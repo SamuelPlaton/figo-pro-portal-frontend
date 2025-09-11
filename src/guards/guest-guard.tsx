@@ -22,6 +22,7 @@ export function withGuestGuard<P extends object>(WrappedComponent: React.Compone
             setIsGuest(true);
           }
         } catch (err) {
+          console.error(err);
           setIsGuest(true);
         } finally {
           setLoading(false);
