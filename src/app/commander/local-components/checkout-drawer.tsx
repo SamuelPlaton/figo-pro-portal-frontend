@@ -8,18 +8,16 @@ import {
   CheckoutSuccess,
 } from '@/app/commander/local-components/index';
 import { useRouter } from 'next/navigation';
+import { useDrawer } from '@/context';
 
 interface CheckoutDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
   onRemoveCheckoutItem: (item: CheckoutItem) => void;
   onOrderCreated: () => void;
   checkout: Checkout;
   products: Product[];
 }
+
 export default function CheckoutDrawer({
-  isOpen,
-  onClose,
   onRemoveCheckoutItem,
   onOrderCreated,
   checkout,
@@ -27,13 +25,14 @@ export default function CheckoutDrawer({
 }: CheckoutDrawerProps) {
   const router = useRouter();
   const [isCheckoutFormOpened, setIsCheckoutFormOpened] = useState(false);
+  const { closeDrawer, isDrawerOpen } = useDrawer();
   const [order, setOrder] = useState<Order>();
 
   const handleCheckoutClose = () => {
     if (order) {
       router.push(ROUTES.HOME);
     }
-    onClose();
+    closeDrawer('checkout');
     setIsCheckoutFormOpened(false);
   };
 
@@ -58,7 +57,7 @@ export default function CheckoutDrawer({
   };
 
   return (
-    <Drawer isOpen={isOpen} onClose={handleCheckoutClose}>
+    <Drawer isOpen={isDrawerOpen('checkout')} onClose={() => closeDrawer('checkout')}>
       {getChildren()}
     </Drawer>
   );

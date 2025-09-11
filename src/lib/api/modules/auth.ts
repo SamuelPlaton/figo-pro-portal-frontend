@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { apiClient } from '@/lib/api';
 
 export interface SignUpBody {
   email: string;
@@ -34,8 +35,7 @@ export interface AuthMeResponse {
 }
 
 const signup = async (body: SignUpBody): Promise<AxiosResponse<SignUpResponse>> => {
-  const res = await axios.post<SignUpResponse>('/api/auth/signup', body);
-  return res;
+  return await axios.post<SignUpResponse>('/api/auth/signup', body);
 };
 
 const login = async (body: LoginBody): Promise<AxiosResponse<LoginResponse>> => {
@@ -43,8 +43,8 @@ const login = async (body: LoginBody): Promise<AxiosResponse<LoginResponse>> => 
 };
 
 const isConnected = async (): Promise<boolean> => {
-  return axios
-    .get<AuthMeResponse>('/api/auth/me')
+  return apiClient
+    .get<AuthMeResponse>('/api/auth/me', { baseURL: process.env.NEXT_PUBLIC_APP_BASE_URL })
     .then(response => response.data.authenticated)
     .catch(() => false);
 };

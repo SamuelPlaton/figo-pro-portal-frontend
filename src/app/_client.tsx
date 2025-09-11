@@ -9,26 +9,10 @@ import {
   FaqSection,
   PartnersOffers,
 } from '@/app/(home)';
-import { useEffect, useState } from 'react';
-import { api } from '@/lib/api';
-import { Loader } from '@/components';
+import { useAuth } from '@/context';
 
 export default function HomeCore() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
-
-  useEffect(() => {
-    const getIsAuthenticated = () => {
-      return api.auth
-        .isConnected()
-        .then(response => setIsAuthenticated(response))
-        .catch(() => setIsAuthenticated(false));
-    };
-    getIsAuthenticated();
-  }, []);
-
-  if (isAuthenticated === undefined) {
-    return <Loader />;
-  }
+  const { isAuthenticated } = useAuth();
 
   return (
     <>

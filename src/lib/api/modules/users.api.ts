@@ -18,6 +18,16 @@ export interface PostUserBody {
   email: string;
 }
 
+const me = (): Promise<User | undefined> => {
+  return apiClient
+    .get<ApiResponse<User>>('/users/me')
+    .then(res => res.data.data)
+    .catch(err => {
+      console.error('ERR ME', err);
+      return undefined;
+    });
+};
+
 const postUser = (body: PostUserBody): Promise<AxiosResponse<ApiResponse<User>>> => {
   return apiClient.post<ApiResponse<User>>('/users', body).catch(err => {
     console.error(err);
@@ -27,4 +37,5 @@ const postUser = (body: PostUserBody): Promise<AxiosResponse<ApiResponse<User>>>
 
 export const UsersModule = {
   postUser,
+  me,
 };

@@ -14,29 +14,41 @@ export async function POST(req: NextRequest) {
       client_id: process.env.AUTH0_CLIENT_ID,
       client_secret: process.env.AUTH0_CLIENT_SECRET,
     });
-
-    const { access_token, refresh_token, expires_in, id_token } = response.data;
+    const { access_token, refresh_token, expires_in } = response.data;
 
     // Stockage access_token en HttpOnly cookie
-    const cookie = serialize('access_token', access_token, {
+    const accessCookie = serialize('access_token', access_token, {
       httpOnly: true,
       path: '/',
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: expires_in, // en secondes
+      maxAge: expires_in, // in seconds
     });
 
-    return NextResponse.json(
+    const refreshCookie = serialize('refresh_token', refresh_token, {
+      httpOnly: true,
+      path: '/api/auth/refresh', // only accessible by the refresh route
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 30 * 24 * 60 * 60, // 30 days
+    });
+
+    const nextResponse = NextResponse.json(
       { status: 200 },
       {
         status: 200,
-        headers: { 'Set-Cookie': cookie, 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
     );
+
+    nextResponse.headers.append('Set-Cookie', accessCookie);
+    nextResponse.headers.append('Set-Cookie', refreshCookie);
+
+    return nextResponse;
     // eslint-disable-next-line
   } catch (err: any) {
-    console.error('ERROR', err.response);
-    console.error('STATUS', err.response.status);
     return NextResponse.json({ data: err.response?.data }, { status: err.response?.status || 500 });
   }
 }

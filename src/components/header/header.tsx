@@ -3,32 +3,35 @@
 import Image from 'next/image';
 import { Button, MobileNavigation } from '@/components';
 import { useRouter, usePathname } from 'next/navigation';
-import { ROUTES } from '@/types';
-import { useEffect, useState } from 'react';
+import { Checkout, ROUTES } from '@/types';
 import { api } from '@/lib/api';
+import { useAuth, useDrawer } from '@/context';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
   const router = useRouter();
+  const { openDrawer } = useDrawer();
   const pathname = usePathname();
+  const { isAuthenticated, refreshAuth } = useAuth();
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
-  // todo: use AuthContext so pages call this context, and refreshAuth on login & logout actions
+  const [checkout, setCheckout] = useState<Checkout>({ items: [] });
+
   useEffect(() => {
-    const getIsAuthenticated = () => {
-      return api.auth
-        .isConnected()
-        .then(response => setIsAuthenticated(response))
-        .catch(() => setIsAuthenticated(false));
+    const sync = () => {
+      const stored = localStorage.getItem('checkout');
+      setCheckout(stored ? JSON.parse(stored) : { items: [] });
     };
-    getIsAuthenticated();
+    sync();
+    window.addEventListener('checkout-update', sync);
+    return () => window.removeEventListener('checkout-update', sync);
   }, []);
 
   const handleLogout = async () => {
     await api.auth.logout();
+    await refreshAuth();
     router.replace(ROUTES.SIGNIN);
   };
 
-  // todo: header call outer refs (panier, partager)
   // todo: retrieve auth0 user metadata (is_validated_at, promo_code)
   return (
     <div className="flex flex-row justify-between m-4 md:mx-20 md:my-6">
@@ -54,28 +57,39 @@ export default function Header() {
         <Image src="/assets/1health-logo.svg" alt="1health-logo" width={83} height={21} />
       </div>
       {/* Desktop/Tablet navigation */}
-      <div className="flex-row gap-6 hidden md:flex">
+      <div className="flex-row gap-6 hidden md:flex items-center">
         {pathname === ROUTES.HOME && isAuthenticated && (
-          <>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => console.log('contact')}
-              label="Nous contacter"
-            />
-            <Button
-              size="sm"
-              variant="primary"
-              onClick={() => console.log('share')}
-              label="Partager"
-            />
-          </>
+          <Button
+            size="md"
+            variant="outline"
+            onClick={() => console.log('contact')}
+            label="Nous contacter"
+          />
         )}
-        {isAuthenticated === true && (
+        {isAuthenticated && (
+          <Button
+            size="md"
+            variant={pathname === ROUTES.HOME ? 'primary' : 'outline'}
+            onClick={() => openDrawer('link-sharing')}
+            appendIcon="upload"
+            label="Partager mon lien"
+          />
+        )}
+        {pathname === ROUTES.ORDER && (
+          <Button
+            size="md"
+            variant="primary"
+            onClick={() => openDrawer('checkout')}
+            appendIcon="shoppingCart"
+            disabled={checkout.items.length === 0}
+            label={`Voir mon panier${checkout.items.length > 0 ? ` (${checkout.items.length})` : ''}`}
+          />
+        )}
+        {isAuthenticated && (
           <Button appendIcon="userCircle" variant="ghost" onClick={handleLogout} size="xl" />
         )}
-        {isAuthenticated === false && (
-          <Button size="sm" variant="primary" label="Se connecter" href={ROUTES.SIGNIN} />
+        {!isAuthenticated && (
+          <Button size="md" variant="primary" label="Se connecter" href={ROUTES.SIGNIN} />
         )}
       </div>
       {/* Mobile navigation */}

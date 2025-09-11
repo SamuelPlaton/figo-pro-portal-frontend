@@ -1,11 +1,4 @@
-import axios from 'axios';
 import { AuthModule, OrdersModule, ProductsModule, UsersModule } from '@/lib/api/modules';
-
-/* Define the axios config */
-export const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  withCredentials: true,
-});
 
 export type ApiGetQueryParams = {
   includes?: string[];

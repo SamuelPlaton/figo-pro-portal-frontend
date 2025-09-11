@@ -12,6 +12,7 @@ import PackageIcon from '@/components/icon/icons/package';
 import PlusIcon from '@/components/icon/icons/plus.svg';
 import SearchLoopIcon from '@/components/icon/icons/search-loop';
 import ShoppingCartIcon from '@/components/icon/icons/shopping-cart';
+import UploadIcon from '@/components/icon/icons/upload';
 import UserCircleIcon from '@/components/icon/icons/user-circle';
 import XIcon from '@/components/icon/icons/x';
 
@@ -29,6 +30,7 @@ export type IconName =
   | 'plus'
   | 'searchLoop'
   | 'shoppingCart'
+  | 'upload'
   | 'userCircle'
   | 'x';
 
@@ -52,6 +54,7 @@ const icons: Record<IconName, React.FC<IconProps>> = {
   plus: PlusIcon,
   searchLoop: SearchLoopIcon,
   shoppingCart: ShoppingCartIcon,
+  upload: UploadIcon,
   userCircle: UserCircleIcon,
   x: XIcon,
 };

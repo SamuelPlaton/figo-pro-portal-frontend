@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import { serialize } from 'cookie';
+import { cookies } from 'next/headers';
 
-// todo: automate refresh
 export async function POST(req: NextRequest) {
   try {
-    const { refresh_token } = await req.json(); // ou stocké côté serveur
+    const cookieStore = await cookies();
+    const refresh_token = cookieStore.get('refresh_token')?.value;
 
     if (!refresh_token) throw new Error('No refresh token provided');
 
@@ -22,10 +23,15 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       path: '/',
       secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: expires_in,
     });
 
-    return NextResponse.json({ access_token }, { headers: { 'Set-Cookie': cookie } });
+    return NextResponse.json(
+      { access_token },
+      { headers: { 'Set-Cookie': cookie, 'Content-Type': 'application/json' } },
+    );
+    // eslint-disable-next-line
   } catch (err: any) {
     return NextResponse.json(
       { error: err.response?.data || err.message },

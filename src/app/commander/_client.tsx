@@ -10,6 +10,7 @@ import {
 import { Metadata } from 'next';
 import { useToast } from '@/context/toast-context';
 import { withAuthGuard } from '@/guards';
+import { useDrawer } from '@/context';
 
 export const metadata: Metadata = {
   title: 'Figo - Commander',
@@ -18,9 +19,10 @@ export const metadata: Metadata = {
 
 const OrderPageCore = () => {
   const { addToast } = useToast();
+  const { openDrawer } = useDrawer();
+
   const [products, setProducts] = useState<Product[]>();
   const [checkout, setCheckout] = useState<Checkout>({ items: [] });
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
 
   // Load Checkout from Local Storage, Products from API
   useEffect(() => {
@@ -41,6 +43,7 @@ const OrderPageCore = () => {
   // save checkout every updates
   useEffect(() => {
     localStorage.setItem('checkout', JSON.stringify(checkout));
+    window.dispatchEvent(new Event('checkout-update'));
   }, [checkout]);
 
   const addItem = (product: Product) => {
@@ -61,16 +64,12 @@ const OrderPageCore = () => {
     setCheckout({ items: [] });
   };
 
-  // todo: rework header (!!!)
-
   return (
     <>
       <ProductCatalogue products={products} checkout={checkout} onAddProduct={addItem} />
       {/* CHECKOUT FORM */}
       {products && (
         <CheckoutDrawer
-          isOpen={isCheckoutOpen}
-          onClose={() => setIsCheckoutOpen(false)}
           onRemoveCheckoutItem={removeItem}
           checkout={checkout}
           products={products}
@@ -80,7 +79,7 @@ const OrderPageCore = () => {
       {/* NAVIGATION */}
       <CheckoutNavigation
         checkout={checkout}
-        onOpenCheckout={() => setIsCheckoutOpen(true)}
+        onOpenCheckout={() => openDrawer('checkout')}
         isLoading={!products}
       />
     </>

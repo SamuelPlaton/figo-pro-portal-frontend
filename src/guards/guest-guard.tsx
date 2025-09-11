@@ -3,20 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/types';
-import { api } from '@/lib/api';
 import { PageLoader } from '@/components/page-loader';
+import { useAuth } from '@/context';
 
 export function withGuestGuard<P extends object>(WrappedComponent: React.ComponentType<P>) {
   const GuestGuardHOC: React.FC<P> = props => {
     const [loading, setLoading] = useState(true);
     const [isGuest, setIsGuest] = useState(false);
     const router = useRouter();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
       async function checkGuest() {
         try {
-          const isAuthenticated = await api.auth.isConnected();
-
           if (isAuthenticated) {
             router.replace(ROUTES.HOME);
           } else {
@@ -30,7 +29,7 @@ export function withGuestGuard<P extends object>(WrappedComponent: React.Compone
       }
 
       checkGuest();
-    }, [router]);
+    }, [router, isAuthenticated]);
 
     if (loading) return <PageLoader />;
 

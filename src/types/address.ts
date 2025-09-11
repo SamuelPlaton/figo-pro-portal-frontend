@@ -8,6 +8,8 @@ export interface Address {
   email?: string;
   zip: string;
   city: string;
+  phone_number?: string;
+  phone_indicative?: string;
 }
 
 export interface AddressForm {

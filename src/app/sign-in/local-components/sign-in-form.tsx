@@ -6,11 +6,12 @@ import { api } from '@/lib/api';
 import { useToast } from '@/context/toast-context';
 import { ROUTES } from '@/types';
 import { useRouter } from 'next/navigation';
-import { withGuestGuard } from '@/guards';
+import { useAuth } from '@/context';
 
 type FormData = { password: string; email: string };
 
 const SignInForm = () => {
+  const { refreshAuth } = useAuth();
   const { addToast } = useToast();
   const router = useRouter();
   const {
@@ -18,13 +19,13 @@ const SignInForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
-  // todo: refresh token on 401 from api auto
 
   const onSubmit = async (data: FormData) => {
     return api.auth
       .login(data)
-      .then(() => {
+      .then(async () => {
         addToast('Connexion réussie', 'success');
+        await refreshAuth();
         router.push(ROUTES.HOME);
       })
       .catch(error => {

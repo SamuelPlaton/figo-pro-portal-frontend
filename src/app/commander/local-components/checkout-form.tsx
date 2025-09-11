@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { Checkout, Order, User } from '@/types';
+import { Checkout, Order } from '@/types';
 import { Button, Input, Select } from '@/components';
 import { api } from '@/lib/api';
 import { useToast } from '@/context/toast-context';
+import { useAuth } from '@/context';
 
 interface CheckoutFormProps {
   checkout: Checkout;
@@ -23,22 +24,8 @@ type FormData = {
 
 export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps) {
   const { addToast } = useToast();
-  // todo: retrieve user from api
-  const user: User = {
-    id: '6fba0bb9-fa6d-4112-8ac7-0ed67ef66592',
-    email: 'platonsam02@gmail.com',
-    phone_indicative: '+41',
-    phone_number: '627871699',
-    address: {
-      id: '6fba0bb9-fa6d-4112-8ac7-0ed67ef66592',
-      first_name: 'Samuel',
-      last_name: 'Platon',
-      street1: '7 Rue des Salicornes',
-      street2: 'Appartement A5',
-      zip: '44200',
-      city: 'Nantes',
-    },
-  };
+  const { user } = useAuth();
+  console.log('USER', user);
 
   const {
     register,
@@ -46,14 +33,15 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     defaultValues: {
-      firstName: user.address.first_name,
-      lastName: user.address.last_name,
-      email: user.email,
-      street1: user.address.street1,
-      phoneIndicative: user.phone_indicative,
-      phoneNumber: user.phone_number,
-      zip: user.address.zip,
-      city: user.address.city,
+      firstName: user?.address.first_name,
+      lastName: user?.address.last_name,
+      email: user?.email,
+      street1: user?.address.street1,
+      phoneIndicative: user?.address.phone_indicative,
+      phoneNumber: user?.address.phone_number,
+      company: user?.address.company,
+      zip: user?.address.zip,
+      city: user?.address.city,
     },
   });
 

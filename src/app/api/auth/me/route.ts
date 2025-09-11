@@ -10,7 +10,7 @@ export async function GET() {
     const cookieStore = await cookies();
     const token = cookieStore.get('access_token')?.value;
     if (!token) {
-      return NextResponse.json({ authenticated: false, error: 'No access token' }, { status: 401 });
+      return NextResponse.json({ authenticated: false, error: 'No access token' }, { status: 403 });
     }
 
     // 2️⃣ vérifier le token avec la clé publique Auth0

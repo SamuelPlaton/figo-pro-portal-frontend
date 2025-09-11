@@ -1,3 +1,5 @@
+'use client';
+
 import { HeroAuth } from '@/components';
 import { SignUpForm } from '@/app/sign-up/local-components';
 import { withGuestGuard } from '@/guards';
