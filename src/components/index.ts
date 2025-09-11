@@ -7,6 +7,7 @@ export * from './header';
 export * from './hero-auth';
 export * from './icon';
 export * from './input';
+export * from './loader';
 export * from './mobile-navigation';
 export * from './order-total-price';
 export * from './product-list-item';

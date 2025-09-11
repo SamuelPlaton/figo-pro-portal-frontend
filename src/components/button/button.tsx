@@ -7,7 +7,7 @@ import { Icon, Spinner } from '@/components';
 
 export interface ButtonProps {
   label?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   onClick?: () => void;
   variant?: 'outline' | 'primary' | 'ghost';
   appendIcon?: IconName;
@@ -45,6 +45,7 @@ export default function Button({
     sm: 20,
     md: 20,
     lg: 24,
+    xl: 30,
   };
 
   const content = loading ? (
@@ -79,6 +80,7 @@ const buttonClassNames = {
     sm: 'px-4 py-2 min-h-[40px]',
     md: 'px-4 py-2.5 min-h-[44px]',
     lg: 'px-6 py-3 min-h-[48px]',
+    xl: 'px-8 py-4 min-h-[52px]',
   },
   variants: {
     primary: 'bg-primary text-white',

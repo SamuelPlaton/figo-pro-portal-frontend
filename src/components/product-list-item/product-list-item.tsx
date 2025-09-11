@@ -13,7 +13,7 @@ export default function ProductListItem({ product, className, onRemove }: Produc
   const classNames = clsx('flex flex-row gap-4 justify-between max-w-[600px]', className);
   return (
     <div className={classNames}>
-      <div className={`overflow-hidden relative bg-[#FDF5ED] p-2 rounded-2xl h-[100px]`}>
+      <div className={`overflow-hidden relative bg-cream-light p-2 rounded-2xl h-[100px]`}>
         <img
           src={`/assets/products/${product.external_reference}.png`}
           alt={product.label}

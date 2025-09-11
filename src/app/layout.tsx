@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import '@/style/globals.css';
 import { Footer, Header } from '@/components';
-import { ToastProvider } from '@/context/toast-context';
+import { AuthProvider, ToastProvider } from '@/context';
+import { DrawerProvider } from '@/context/drawer-context';
+import { LinkSharingDrawer } from '@/app/(home)';
 
 export const metadata: Metadata = {
   title: 'Figo - Portail vétérinaire',
@@ -16,11 +18,16 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="min-h-screen flex flex-col">
-        <ToastProvider>
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </ToastProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <DrawerProvider>
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <LinkSharingDrawer />
+              <Footer />
+            </DrawerProvider>
+          </ToastProvider>
+        </AuthProvider>
       </body>
     </html>
   );

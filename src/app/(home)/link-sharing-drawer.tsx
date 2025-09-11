@@ -1,12 +1,9 @@
+'use client';
+
 import { Drawer } from '@/components';
 import { useToast } from '@/context/toast-context';
 import { ElementType } from 'react';
-
-interface LinkSharingDrawerProps {
-  onClose: () => void;
-  isOpen: boolean;
-  link: string;
-}
+import { useDrawer } from '@/context';
 
 interface LinkOption {
   onClick?: () => void;
@@ -16,8 +13,10 @@ interface LinkOption {
   className?: string;
 }
 
-export default function LinkSharingDrawer({ onClose, isOpen, link }: LinkSharingDrawerProps) {
+export default function LinkSharingDrawer() {
   const { addToast } = useToast();
+  const link = 'https://todo:implement-link';
+  const { closeDrawer, isDrawerOpen } = useDrawer();
 
   const getEncodedSubject = () => {
     return encodeURIComponent("Découvrez l'assurance Figo !");
@@ -97,7 +96,7 @@ Tu peux découvrir ici 👉 ${link}
   };
 
   return (
-    <Drawer isOpen={isOpen} onClose={onClose}>
+    <Drawer isOpen={isDrawerOpen('link-sharing')} onClose={() => closeDrawer('link-sharing')}>
       <div className="flex flex-col gap-4">
         <span className="text-lg font-bold">
           Invitez des propriétaires d&#39;animaux dès maintenant !

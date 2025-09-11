@@ -1,19 +1,29 @@
 'use client';
-import { Button } from '@/components';
-import { ROUTES } from '@/types';
+import { Button, Loader } from '@/components';
+import { Product, ROUTES } from '@/types';
 import { OfflineOverlay, OrderHistoryDrawer } from '@/app/(home)/index';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { api } from '@/lib/api';
 
-export default function GoodiesSection() {
+interface GoodiesSectionProps {
+  isAuthenticated: boolean;
+}
+export default function GoodiesSection({ isAuthenticated }: GoodiesSectionProps) {
   const [isOrderHistoryOpen, setIsOrderHistoryOpen] = useState(false);
+  const [products, setProducts] = useState<Product[]>();
 
-  const isAuthenticated = true;
+  useEffect(() => {
+    if (isAuthenticated) {
+      api.products.getProducts().then(response => setProducts(response.data));
+    }
+  }, [isAuthenticated]);
+
   return (
     <div id="goodies">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 gap-4">
         <h2 className="flex-grow">Nos Goodies Figo</h2>
         {isAuthenticated && (
-          <div className="w-full md:w-auto flex flex-row gap-2 items-center justify-between">
+          <div className="w-full md:w-auto flex flex-row gap-6 items-center justify-between">
             <span
               className="font-bold underline cursor-pointer"
               onClick={() => setIsOrderHistoryOpen(true)}
@@ -24,16 +34,41 @@ export default function GoodiesSection() {
           </div>
         )}
       </div>
-      <div className="relative flex flex-col md:flex-row justify-between gap-4 md-h-[320px]">
+      {/** UNAUTHENTICATED : DISPLAY MOCK BLOCKS AND OFFLINE OVERLAY */}
+      <div className="relative flex flex-col md:flex-row justify-between items-center gap-4 md-h-[340px]">
         {!isAuthenticated && (
-          <OfflineOverlay label="commander gratuitement nos affiches, flyers et goodies" />
+          <>
+            <OfflineOverlay label="commander gratuitement nos affiches, flyers et goodies" />
+            <div className="bg-cream-light p-8 rounded-4xl h-[340px] w-[340px]" />
+            <div className="bg-cream-light p-8 rounded-4xl h-[340px] w-[340px] hidden md:block" />
+            <div className="bg-cream-light p-8 rounded-4xl h-[340px] w-[340px] hidden md:block" />
+          </>
         )}
-        <span>Todo</span>
+        {/** LOADING : DISPLAY LOADER */}
+        {isAuthenticated && !products && <Loader />}
+        {/** AUTHENTICATED : DISPLAY GOODIES */}
+        {isAuthenticated &&
+          products &&
+          products.map(product => (
+            <div
+              key={product.id}
+              className="bg-cream-light flex flex-col flex-wrap p-8 rounded-4xl max-h-[340px] w-[340px]"
+            >
+              <img
+                src={`/assets/products/${product.external_reference}.png`}
+                alt={product.label}
+                className="flex-grow w-3/4 m-auto p-4"
+              />
+              <span>{product.label}</span>
+            </div>
+          ))}
       </div>
-      <OrderHistoryDrawer
-        onClose={() => setIsOrderHistoryOpen(false)}
-        isOpen={isOrderHistoryOpen}
-      />
+      {isAuthenticated && (
+        <OrderHistoryDrawer
+          onClose={() => setIsOrderHistoryOpen(false)}
+          isOpen={isOrderHistoryOpen}
+        />
+      )}
     </div>
   );
 }

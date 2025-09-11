@@ -1,0 +1,38 @@
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { jwtVerify, createRemoteJWKSet } from 'jose';
+
+const JWKS = createRemoteJWKSet(new URL(`${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`));
+
+export async function GET() {
+  try {
+    // 1️⃣ récupérer le cookie
+    const cookieStore = await cookies();
+    const token = cookieStore.get('access_token')?.value;
+    if (!token) {
+      return NextResponse.json({ authenticated: false, error: 'No access token' }, { status: 403 });
+    }
+
+    // 2️⃣ vérifier le token avec la clé publique Auth0
+    const { payload } = await jwtVerify(token, JWKS, {
+      issuer: `${process.env.AUTH0_DOMAIN}/`,
+      audience: process.env.AUTH0_AUDIENCE,
+    });
+
+    // 3️⃣ renvoyer les infos utilisateur
+    return NextResponse.json({
+      authenticated: true,
+      user: {
+        sub: payload.sub,
+        email: payload.email,
+        name: payload.name,
+      },
+    });
+  } catch (err) {
+    console.error('JWT verification failed:', err);
+    return NextResponse.json(
+      { authenticated: false, error: 'Invalid or expired token' },
+      { status: 401 },
+    );
+  }
+}

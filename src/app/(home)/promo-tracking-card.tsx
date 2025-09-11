@@ -1,10 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import clsx from 'clsx';
 import { Button } from '@/components';
-import LinkSharingDrawer from '@/app/(home)/link-sharing-drawer';
-import { useToast } from '@/context/toast-context';
+import { useToast, useDrawer } from '@/context';
 
 interface PromoTrackingCardProps {
   promoCode: string;
@@ -13,7 +11,7 @@ interface PromoTrackingCardProps {
 
 export default function PromoTrackingCard({ promoCode, className }: PromoTrackingCardProps) {
   const { addToast } = useToast();
-  const [linkSharingDrawerOpen, setLinkSharingDrawerOpen] = useState(false);
+  const { openDrawer } = useDrawer();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText('https://' + getPromoLink());
@@ -41,16 +39,11 @@ export default function PromoTrackingCard({ promoCode, className }: PromoTrackin
         </div>
         <Button
           label={'Partager'}
-          onClick={() => setLinkSharingDrawerOpen(true)}
+          onClick={() => openDrawer('link-sharing')}
           className="mt-2 w-full"
           size="lg"
         />
       </div>
-      <LinkSharingDrawer
-        onClose={() => setLinkSharingDrawerOpen(false)}
-        isOpen={linkSharingDrawerOpen}
-        link={getPromoLink()}
-      />
     </div>
   );
 }
