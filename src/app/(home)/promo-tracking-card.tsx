@@ -2,14 +2,16 @@
 
 import clsx from 'clsx';
 import { Button } from '@/components';
-import { useToast, useDrawer } from '@/context';
+import { useToast, useDrawer, useAuth } from '@/context';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 interface PromoTrackingCardProps {
-  promoCode: string;
   className?: string;
+  promoCode: string;
 }
 
-export default function PromoTrackingCard({ promoCode, className }: PromoTrackingCardProps) {
+export default function PromoTrackingCard({ className, promoCode }: PromoTrackingCardProps) {
   const { addToast } = useToast();
   const { openDrawer } = useDrawer();
 

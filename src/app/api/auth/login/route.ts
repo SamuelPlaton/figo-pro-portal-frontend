@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       client_id: process.env.AUTH0_CLIENT_ID,
       client_secret: process.env.AUTH0_CLIENT_SECRET,
     });
-    const { access_token, refresh_token, expires_in } = response.data;
+    const { access_token, refresh_token, id_token, expires_in } = response.data;
 
     // Stockage access_token en HttpOnly cookie
     const accessCookie = serialize('access_token', access_token, {
@@ -23,6 +23,14 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: expires_in, // in seconds
+    });
+
+    const idCookie = serialize('id_token', id_token, {
+      httpOnly: true,
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: expires_in, // one hour
     });
 
     const refreshCookie = serialize('refresh_token', refresh_token, {
@@ -45,6 +53,7 @@ export async function POST(req: NextRequest) {
 
     nextResponse.headers.append('Set-Cookie', accessCookie);
     nextResponse.headers.append('Set-Cookie', refreshCookie);
+    nextResponse.headers.append('Set-Cookie', idCookie);
 
     return nextResponse;
     // eslint-disable-next-line
