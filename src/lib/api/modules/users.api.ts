@@ -18,6 +18,12 @@ export interface PostUserBody {
   email: string;
 }
 
+export interface UpdateUserBody {
+  email: string;
+  promoCode?: string;
+  validate?: boolean;
+}
+
 const me = (): Promise<User | undefined> => {
   return apiClient
     .get<ApiResponse<User>>('/users/me')
@@ -35,7 +41,12 @@ const postUser = (body: PostUserBody): Promise<AxiosResponse<ApiResponse<User>>>
   });
 };
 
+const updateUser = (body: UpdateUserBody): Promise<AxiosResponse<ApiResponse<User>>> => {
+  return apiClient.post<ApiResponse<User>>('/users/update', body);
+};
+
 export const UsersModule = {
   postUser,
+  updateUser,
   me,
 };

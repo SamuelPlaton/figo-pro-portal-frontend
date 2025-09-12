@@ -32,7 +32,6 @@ export default function Header() {
     router.replace(ROUTES.SIGNIN);
   };
 
-  // todo: retrieve auth0 user metadata (is_validated_at, promo_code)
   return (
     <div className="flex flex-row justify-between m-4 md:mx-20 md:my-6">
       <div
