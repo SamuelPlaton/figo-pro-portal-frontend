@@ -25,7 +25,6 @@ type FormData = {
 export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps) {
   const { addToast } = useToast();
   const { user } = useAuth();
-  console.log('USER', user);
 
   const {
     register,
@@ -99,6 +98,7 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
         />
         <div className="flex flex-row items-end justify-between gap-2">
           <Select
+            className="pb-2"
             options={[
               { value: '+33', label: '🇫🇷 +33' },
               { value: '+32', label: '🇧🇪 +32' },

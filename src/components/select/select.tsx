@@ -38,7 +38,6 @@ export default function Select({
         !!error,
     },
     { 'mt-1': label },
-    className,
   );
 
   const labelClassNames = clsx('font-bold text-primary mb-2', { 'text-[#94A3B8]': disabled });
@@ -46,8 +45,10 @@ export default function Select({
     setIsOpen(false);
     onChange(event);
   };
+  const parentClassName = clsx('w-max-content', className);
+
   return (
-    <div className="w-max-content">
+    <div className={parentClassName}>
       {label && (
         <label htmlFor={name} className={labelClassNames}>
           {label}
