@@ -17,8 +17,7 @@ const AdminPageCore = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  // todo: guard ADMIN Back && Front (Roles in Auth0 or DB ?)
-  // todo: guard validated account Back & Front
+  // todo: guard ADMIN Back && Front (Roles in DB !!!)
   const onSubmit = async (data: FormData) => {
     return api.users
       .updateUser({ ...data, validate: data.validate === 'true' })
