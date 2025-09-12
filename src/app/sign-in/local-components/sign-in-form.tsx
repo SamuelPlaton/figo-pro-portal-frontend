@@ -43,19 +43,17 @@ const SignInForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <Input
           placeholder="Adresse e-mail"
-          required
           type="email"
           autoComplete="email"
           error={errors.email?.message}
-          {...register('email', { required: true })}
+          {...register('email', { required: 'Ce champ est requis' })}
         />
         <Input
           placeholder="Mot de passe"
-          required
           type="password"
           autoComplete="password"
           error={errors.password?.message}
-          {...register('password', { required: true })}
+          {...register('password', { required: 'Ce champ est requis' })}
         />
         <Button type="submit" label="Se connecter" loading={isSubmitting} />
       </form>

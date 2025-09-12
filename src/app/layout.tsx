@@ -18,16 +18,16 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="min-h-screen flex flex-col">
-        <AuthProvider>
-          <ToastProvider>
+        <ToastProvider>
+          <AuthProvider>
             <DrawerProvider>
               <Header />
               <main className="flex-grow">{children}</main>
               <LinkSharingDrawer />
               <Footer />
             </DrawerProvider>
-          </ToastProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </ToastProvider>
       </body>
     </html>
   );

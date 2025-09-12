@@ -1,44 +1,46 @@
 'use client';
 
-import Script from 'next/script';
 import { useRef, useState } from 'react';
+import Script from 'next/script';
 import { AutocompleteInput } from '@/components';
-import AutocompleteSuggestion = google.maps.places.AutocompleteSuggestion;
-import PlacePrediction = google.maps.places.PlacePrediction;
-import AutocompleteRequest = google.maps.places.AutocompleteRequest;
 import { AddressForm } from '@/types';
 
-type Option = { value: string; label: string; entity: AutocompleteSuggestion };
+type Option = {
+  value: string;
+  label: string;
+  entity: google.maps.places.AutocompleteSuggestion;
+};
 
 interface PlacesAutocompleteProps {
   onSelect: (address: Partial<AddressForm>) => void;
+  onInput?: (value: string) => void;
   mode: 'place' | 'address';
 }
 
-export default function PlacesAutocomplete({ onSelect, mode }: PlacesAutocompleteProps) {
+export default function PlacesAutocomplete({ onSelect, onInput, mode }: PlacesAutocompleteProps) {
   const [options, setOptions] = useState<Option[]>([]);
-  // Google Session Token
   const sessionTokenRef = useRef<google.maps.places.AutocompleteSessionToken | null>(null);
 
-  const handleAutocomplete = async (input: string) => {
+  const initAutocomplete = async (input: string) => {
+    if (onInput) {
+      onInput(input);
+    }
     if (!input) {
       setOptions([]);
       return;
     }
 
-    // Make sure lib is loaded
-    if (typeof google === 'undefined' || !google.maps?.importLibrary) {
-      console.warn('Google Maps JS non chargé');
-      return;
-    }
+    if (typeof window === 'undefined' || typeof google === 'undefined') return;
 
     const { AutocompleteSuggestion, AutocompleteSessionToken } = (await google.maps.importLibrary(
       'places',
-    )) as unknown as google.maps.PlacesLibrary;
+    )) as google.maps.PlacesLibrary;
 
-    if (!sessionTokenRef.current) sessionTokenRef.current = new AutocompleteSessionToken();
+    if (!sessionTokenRef.current) {
+      sessionTokenRef.current = new AutocompleteSessionToken();
+    }
 
-    const req: AutocompleteRequest = {
+    const req: google.maps.places.AutocompleteRequest = {
       input,
       sessionToken: sessionTokenRef.current,
       region: 'fr',
@@ -49,15 +51,15 @@ export default function PlacesAutocomplete({ onSelect, mode }: PlacesAutocomplet
 
     const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions(req);
 
-    // mapper les suggestions pour ton UI et garder la suggestion brute pour fetchFields()
-    const opts: Option[] = suggestions.map((s: AutocompleteSuggestion) => {
-      const pp = s.placePrediction as PlacePrediction;
-      return { value: pp.placeId, label: pp.text?.toString?.(), entity: s };
-    });
-    setOptions(opts);
+    setOptions(
+      suggestions.map(s => ({
+        value: s.placePrediction?.placeId ?? '',
+        label: s.placePrediction?.text?.toString?.() ?? '',
+        entity: s,
+      })),
+    );
   };
 
-  // When the user click on a selection
   const handleSelect = async (placeId: string) => {
     const suggestion = options.find(o => o.value === placeId)?.entity;
     if (!suggestion) return;
@@ -66,33 +68,28 @@ export default function PlacesAutocomplete({ onSelect, mode }: PlacesAutocomplet
     if (!prediction) return;
 
     const place = prediction.toPlace();
-    await place.fetchFields({
-      fields: ['addressComponents', 'displayName'],
-    });
-    const addressComponents = place.addressComponents;
-    if (!addressComponents) return;
+    await place.fetchFields({ fields: ['addressComponents', 'displayName'] });
+
     const getAddrComponent = (type: string) =>
-      addressComponents.find(a => a.types.includes(type))?.longText;
+      place.addressComponents?.find(a => a.types.includes(type))?.longText;
+
     const streetNumber = getAddrComponent('street_number');
     const route = getAddrComponent('route');
-    const city = getAddrComponent('locality');
-    const zip = getAddrComponent('postal_code');
 
     sessionTokenRef.current = null;
     onSelect({
       street1: streetNumber && route ? streetNumber + ' ' + route : undefined,
-      city: city ?? undefined,
-      zip: zip ?? undefined,
+      city: getAddrComponent('locality') ?? undefined,
+      zip: getAddrComponent('postal_code') ?? undefined,
       company: place.displayName as string,
     });
   };
 
   return (
     <>
-      {/* load Google Maps JS API (libraries=places) */}
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
-        strategy="beforeInteractive"
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+        strategy="afterInteractive"
       />
       <AutocompleteInput
         name="places"
@@ -100,7 +97,7 @@ export default function PlacesAutocomplete({ onSelect, mode }: PlacesAutocomplet
           mode === 'place' ? 'Rechercher une clinique vétérinaire...' : 'Rechercher une adresse'
         }
         options={options}
-        onAutocomplete={handleAutocomplete}
+        onAutocomplete={initAutocomplete}
         onSelect={handleSelect}
       />
     </>
