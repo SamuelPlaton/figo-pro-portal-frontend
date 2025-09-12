@@ -36,7 +36,9 @@ const SignInForm = () => {
         }
       });
   };
-
+  // todo: SSO
+  // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline)
+  // todo: use Image Next JS
   return (
     <div className="flex-grow flex flex-col justify-center gap-4 max-w-[392px]">
       <span className="text-lg font-bold">Se connecter</span>
