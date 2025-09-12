@@ -2,9 +2,7 @@
 
 import clsx from 'clsx';
 import { Button } from '@/components';
-import { useToast, useDrawer, useAuth } from '@/context';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useToast, useDrawer } from '@/context';
 
 interface PromoTrackingCardProps {
   className?: string;

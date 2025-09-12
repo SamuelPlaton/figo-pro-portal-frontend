@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 export interface SelectOption {
@@ -15,7 +15,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   className?: string;
 }
 
-export default React.forwardRef<HTMLSelectElement, SelectProps>(
+const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ options, onChange, onBlur, name, label, error, className, ...props }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -72,3 +72,6 @@ export default React.forwardRef<HTMLSelectElement, SelectProps>(
     );
   },
 );
+
+Select.displayName = 'Select';
+export default Select;
