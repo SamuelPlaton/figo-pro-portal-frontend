@@ -17,9 +17,9 @@ export async function POST() {
       refresh_token,
     });
 
-    const { access_token, expires_in } = response.data;
+    const { access_token, id_token, expires_in } = response.data;
 
-    const cookie = serialize('access_token', access_token, {
+    const accessCookie = serialize('access_token', access_token, {
       httpOnly: true,
       path: '/',
       secure: process.env.NODE_ENV === 'production',
@@ -27,10 +27,23 @@ export async function POST() {
       maxAge: expires_in,
     });
 
-    return NextResponse.json(
+    const idCookie = serialize('id_token', id_token, {
+      httpOnly: true,
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: expires_in,
+    });
+
+    const nextResponse = NextResponse.json(
       { access_token },
-      { headers: { 'Set-Cookie': cookie, 'Content-Type': 'application/json' } },
+      { headers: { 'Content-Type': 'application/json' } },
     );
+
+    nextResponse.headers.append('Set-Cookie', accessCookie);
+    nextResponse.headers.append('Set-Cookie', idCookie);
+
+    return nextResponse;
     // eslint-disable-next-line
   } catch (err: any) {
     return NextResponse.json(

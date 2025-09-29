@@ -29,11 +29,12 @@ export default function CheckoutDrawer({
   const [order, setOrder] = useState<Order>();
 
   const handleCheckoutClose = () => {
+    closeDrawer('checkout');
+    setOrder(undefined);
+    setIsCheckoutFormOpened(false);
     if (order) {
       router.push(ROUTES.HOME);
     }
-    closeDrawer('checkout');
-    setIsCheckoutFormOpened(false);
   };
 
   const handleOrderCreated = (order: Order) => {
@@ -57,7 +58,7 @@ export default function CheckoutDrawer({
   };
 
   return (
-    <Drawer isOpen={isDrawerOpen('checkout')} onClose={() => closeDrawer('checkout')}>
+    <Drawer isOpen={isDrawerOpen('checkout')} onClose={handleCheckoutClose}>
       {getChildren()}
     </Drawer>
   );

@@ -5,11 +5,11 @@ import { Button } from '@/components';
 import { useToast, useDrawer } from '@/context';
 
 interface PromoTrackingCardProps {
-  promoCode: string;
   className?: string;
+  promoCode: string;
 }
 
-export default function PromoTrackingCard({ promoCode, className }: PromoTrackingCardProps) {
+export default function PromoTrackingCard({ className, promoCode }: PromoTrackingCardProps) {
   const { addToast } = useToast();
   const { openDrawer } = useDrawer();
 

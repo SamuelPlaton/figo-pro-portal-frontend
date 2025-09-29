@@ -9,7 +9,7 @@ import {
 } from '@/app/commander/local-components';
 import { Metadata } from 'next';
 import { useToast } from '@/context/toast-context';
-import { withAuthGuard } from '@/guards';
+import { withAuthGuard, withValidatedAccountGuard } from '@/guards';
 import { useDrawer } from '@/context';
 
 export const metadata: Metadata = {
@@ -86,4 +86,4 @@ const OrderPageCore = () => {
   );
 };
 
-export default withAuthGuard(OrderPageCore);
+export default withAuthGuard(withValidatedAccountGuard(OrderPageCore));

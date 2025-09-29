@@ -11,6 +11,14 @@ export async function POST() {
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   });
 
+  const idCookie = serialize('id_token', '', {
+    httpOnly: true,
+    path: '/',
+    maxAge: 0,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  });
+
   const refreshCookie = serialize('refresh_token', '', {
     httpOnly: true,
     path: '/',
@@ -25,7 +33,9 @@ export async function POST() {
       status: 200,
     },
   );
+
   nextResponse.headers.append('Set-Cookie', accessCookie);
+  nextResponse.headers.append('Set-Cookie', idCookie);
   nextResponse.headers.append('Set-Cookie', refreshCookie);
   return nextResponse;
 }

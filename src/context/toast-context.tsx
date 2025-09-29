@@ -33,7 +33,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const addToast = useCallback(
     (message: string, type: Toast['type'] = 'info', title?: string, duration = 3000) => {
       const id = Date.now();
-      setToasts(prev => [...prev, { id, message, title, type, duration }]);
+      const key = `${type}-${title ?? ''}-${message}`;
+
+      setToasts(prev => {
+        const alreadyExists = prev.some(t => `${t.type}-${t.title ?? ''}-${t.message}` === key);
+        if (alreadyExists) return prev;
+
+        return [...prev, { id, message, title, type, duration }];
+      });
+
       setTimeout(() => removeToast(id), duration);
     },
     [removeToast],
