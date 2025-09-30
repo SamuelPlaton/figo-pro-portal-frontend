@@ -65,7 +65,7 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
 
   return (
     <div className="flex flex-grow flex-col gap-1">
-      <span className="text-lg font-bold">Où devons-nous envoyer votre commande ?</span>
+      <span className="text-lg font-bold pr-6">Où devons-nous envoyer votre commande ?</span>
       <span className="mb-4 text-neutral-low">Information de livraison</span>
       <form className="flex flex-grow flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <Input

@@ -7,7 +7,7 @@ import { User } from '@/types';
 
 type AuthContextType = {
   isAuthenticated: boolean;
-  user?: User;
+  user?: User | null;
   refreshAuth: () => Promise<void>;
 };
 
@@ -15,7 +15,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>();
   const refreshAuth = async () => {
     try {
       const res = await api.auth.isConnected();
@@ -24,11 +24,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const resUser = await api.users.me();
         setUser(resUser);
       } else {
-        setUser(undefined);
+        setUser(null);
       }
     } catch {
       setIsAuthenticated(false);
-      setUser(undefined);
+      setUser(null);
     }
   };
 

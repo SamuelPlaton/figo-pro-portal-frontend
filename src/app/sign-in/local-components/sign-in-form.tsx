@@ -37,12 +37,8 @@ const SignInForm = () => {
       });
   };
   // todo: SSO
-  // todo: make the burger menu (and drawers who overrides)
-  // todo: make the profile dropdown
   // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline)
   // todo: use Image Next JS
-  // todo: add empty products
-  // todo: home: goodies -> Click (rendre cards cliquables)
   return (
     <div className="flex-grow flex flex-col justify-center gap-4 max-w-[392px]">
       <span className="text-lg font-bold">Se connecter</span>

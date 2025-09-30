@@ -11,11 +11,12 @@ export function withValidatedAccountGuard<P extends object>(
 ) {
   const ValidatedAccountGuardHOC: React.FC<P> = props => {
     const { addToast } = useToast();
-    const { user } = useAuth();
+    const { user, isAuthenticated } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-      if (!user || !user.validated_at) {
+      if (user !== undefined && (!user || !user.validated_at)) {
+        console.log({ isAuthenticated, user });
         addToast(
           'Notre modération est en train de vérifier votre compte, veuillez patienter...',
           'error',
@@ -23,7 +24,7 @@ export function withValidatedAccountGuard<P extends object>(
         );
         router.replace(ROUTES.HOME);
       }
-    }, [user, addToast, router]);
+    }, [isAuthenticated, user, addToast, router]);
 
     if (!user || !user.validated_at) {
       return <PageLoader />;

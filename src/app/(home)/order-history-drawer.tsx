@@ -29,7 +29,7 @@ export default function OrderHistoryDrawer({ isOpen, onClose }: OrderHistoryDraw
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col gap-1 mb-6">
-        <span className="text-2xl text-primary font-bold">Historique de commandes</span>
+        <span className="text-2xl text-primary font-bold pr-6">Historique de commandes</span>
         <span className="text-neutral-low">Consultez le statut de vos commandes</span>
       </div>
       <div className="flex flex-col gap-8">

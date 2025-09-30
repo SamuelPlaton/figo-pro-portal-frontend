@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Button, MobileNavigation } from '@/components';
+import { Button, Dropdown, MobileNavigation } from '@/components';
 import { useRouter, usePathname } from 'next/navigation';
 import { Checkout, ROUTES } from '@/types';
 import { api } from '@/lib/api';
@@ -12,9 +12,10 @@ export default function Header() {
   const router = useRouter();
   const { openDrawer } = useDrawer();
   const pathname = usePathname();
-  const { isAuthenticated, refreshAuth } = useAuth();
+  const { isAuthenticated, refreshAuth, user } = useAuth();
 
   const [checkout, setCheckout] = useState<Checkout>({ items: [] });
+  const [isDropdownProfileOpen, setIsDropdownProfileOpen] = useState(false);
 
   useEffect(() => {
     const sync = () => {
@@ -30,6 +31,7 @@ export default function Header() {
     await api.auth.logout();
     await refreshAuth();
     router.replace(ROUTES.SIGNIN);
+    setIsDropdownProfileOpen(false);
   };
 
   return (
@@ -63,7 +65,7 @@ export default function Header() {
             label="Nous contacter"
           />
         )}
-        {isAuthenticated && (
+        {isAuthenticated && user?.promo_code && (
           <Button
             size="md"
             variant={pathname === ROUTES.HOME ? 'primary' : 'outline'}
@@ -83,7 +85,34 @@ export default function Header() {
           />
         )}
         {isAuthenticated && (
-          <Button appendIcon="userCircle" variant="ghost" onClick={handleLogout} size="xl" />
+          <div className="relative inline-block">
+            <Button
+              appendIcon="userCircle"
+              variant="ghost"
+              onClick={() => setIsDropdownProfileOpen(true)}
+              size="xl"
+            />
+            <Dropdown
+              onClose={() => setIsDropdownProfileOpen(false)}
+              isOpen={isDropdownProfileOpen}
+            >
+              <div className="flex flex-col items-start gap-2 p-4">
+                <div className="border-b-2 border-b-gray w-full">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    label="Mon profil"
+                    onClick={() => {
+                      setIsDropdownProfileOpen(false);
+                      router.push(ROUTES.PROFILE);
+                    }}
+                    className="w-fit"
+                  />
+                </div>
+                <Button size="sm" variant="ghost" onClick={handleLogout} label="Se déconnecter" />
+              </div>
+            </Dropdown>
+          </div>
         )}
         {!isAuthenticated && (
           <Button size="md" variant="primary" label="Se connecter" href={ROUTES.SIGNIN} />

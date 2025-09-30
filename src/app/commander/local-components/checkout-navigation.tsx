@@ -24,14 +24,14 @@ export default function CheckoutNavigation({
         prependIcon="arrowLeft"
         variant="outline"
         onClick={() => router.back()}
-        size="lg"
+        size="md"
       />
       <Button
         label={`Voir mon panier${checkout.items.length > 0 ? ` (${checkout.items.length})` : ''}`}
         onClick={onOpenCheckout}
         appendIcon="shoppingCart"
         disabled={checkout.items.length === 0}
-        size="lg"
+        size="md"
         loading={isLoading}
         className="min-w-3xs"
       />
