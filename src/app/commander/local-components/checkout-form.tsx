@@ -99,18 +99,7 @@ export default function CheckoutForm({ checkout, onSuccess }: CheckoutFormProps)
         <div className="flex flex-row items-end justify-between gap-2">
           <Select
             className="pb-2"
-            options={[
-              { value: '+33', label: '🇫🇷 +33' },
-              { value: '+32', label: '🇧🇪 +32' },
-              { value: '+41', label: '🇨🇭 +41' },
-              { value: '+352', label: '🇱🇺 +352' },
-              { value: '+377', label: '🇲🇨 +377' },
-              { value: '+1', label: '🇨🇦 +1' },
-              { value: '+213', label: '🇩🇿 +213' },
-              { value: '+212', label: '🇲🇦 +212' },
-              { value: '+216', label: '🇹🇳 +216' },
-              { value: '+221', label: '🇸🇳 +221' },
-            ]}
+            options={[{ value: '+33', label: '🇫🇷 +33' }]}
             label="N° de téléphone"
             error={errors.phoneIndicative?.message}
             {...register('phoneIndicative', { required: 'Ce champ est requis' })}

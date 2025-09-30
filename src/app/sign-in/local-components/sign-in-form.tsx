@@ -37,13 +37,10 @@ const SignInForm = () => {
       });
   };
   // todo: SSO
-  // todo: make the singular header interface (Remove "En partenariat avec 1Health")
   // todo: make the burger menu (and drawers who overrides)
   // todo: make the profile dropdown
   // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline)
   // todo: use Image Next JS
-  // todo: select ONLY FRENCH
-  // todo: fix mobile breadcrumb
   // todo: add empty products
   // todo: home: goodies -> Click (rendre cards cliquables)
   return (

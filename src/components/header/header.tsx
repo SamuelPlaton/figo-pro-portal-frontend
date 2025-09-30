@@ -52,8 +52,6 @@ export default function Header() {
           height={31}
           className="hidden md:block"
         />
-        <span className="text-sm md:text-md">en partenariat avec</span>
-        <Image src="/assets/1health-logo.svg" alt="1health-logo" width={83} height={21} />
       </div>
       {/* Desktop/Tablet navigation */}
       <div className="flex-row gap-6 hidden md:flex items-center">
