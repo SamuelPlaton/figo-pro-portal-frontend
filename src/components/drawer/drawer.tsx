@@ -38,7 +38,7 @@ export default function Drawer({ children, isOpen, onClose, className }: DrawerP
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Close Button */}
-        <div className="flex">
+        <div className="absolute right-6">
           <div
             className="bg-neutral-lowest rounded-full p-2 ml-auto cursor-pointer"
             onClick={onClose}

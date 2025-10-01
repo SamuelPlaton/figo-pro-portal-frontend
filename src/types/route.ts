@@ -1,6 +1,7 @@
 export enum ROUTES {
   HOME = '/',
+  ORDER = '/commander',
   SIGNIN = '/sign-in',
   SIGNUP = '/sign-up',
-  ORDER = '/commander',
+  PROFILE = '/profil',
 }

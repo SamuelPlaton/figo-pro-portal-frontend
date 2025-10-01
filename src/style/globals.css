@@ -84,9 +84,9 @@ h4 {
 }
 
 /** CAROUSEL */
-.swiper-wrapper {
-  display: flex !important;
-  flex-direction: row !important;
+.swiper-slide {
+  width: auto !important;
+  flex-shrink: 0;
 }
 
 .swiper-container {

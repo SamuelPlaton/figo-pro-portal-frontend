@@ -43,20 +43,20 @@ export default function HomeBreadcrumb() {
   };
 
   const breakpoints = {
-    0: { spaceBetween: 8 },
-    750: { spaceBetween: 16 },
+    0: { spaceBetween: 16, slidesPerView: 2.5 },
+    750: { spaceBetween: 16, slidesPerView: 5 },
   };
 
   return (
     <Swiper
-      modules={[FreeMode]}
       className="swiper-container"
+      modules={[FreeMode]}
       freeMode={true}
-      slidesPerView="auto"
+      pagination={{ enabled: false }}
       breakpoints={breakpoints}
     >
       {breadcrumbOptions.map((option, index) => (
-        <SwiperSlide key={index} className="w-auto">
+        <SwiperSlide key={index}>
           <TabListItem
             label={option.label}
             isActive={activeBreadcrumb === index}

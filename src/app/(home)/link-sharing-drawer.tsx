@@ -98,7 +98,7 @@ Tu peux découvrir ici 👉 ${link}
   return (
     <Drawer isOpen={isDrawerOpen('link-sharing')} onClose={() => closeDrawer('link-sharing')}>
       <div className="flex flex-col gap-4">
-        <span className="text-lg font-bold">
+        <span className="text-lg font-bold pr-6">
           Invitez des propriétaires d&#39;animaux dès maintenant !
         </span>
         <span>Choisissez votre méthode de recommandations</span>
