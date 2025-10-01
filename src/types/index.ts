@@ -8,3 +8,4 @@ export * from './product-order-status-enum';
 export * from './product-order-status-history';
 export { ROUTES } from './route';
 export * from './user';
+export * from './user-role-enum';

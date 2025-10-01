@@ -5,6 +5,7 @@ import { Button, Input, Select } from '@/components';
 import { withAuthGuard } from '@/guards';
 import { api } from '@/lib/api';
 import { useToast } from '@/context';
+import { withAdminGuard } from '@/guards/admin-guard';
 
 type FormData = { email: string; promoCode?: string; validate: string };
 
@@ -17,7 +18,6 @@ const AdminPageCore = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  // todo: guard ADMIN Back && Front (Roles in DB !!!)
   const onSubmit = async (data: FormData) => {
     return api.users
       .updateUser({ ...data, validate: data.validate === 'true' })
@@ -61,4 +61,4 @@ const AdminPageCore = () => {
   );
 };
 
-export default withAuthGuard(AdminPageCore);
+export default withAuthGuard(withAdminGuard(AdminPageCore));

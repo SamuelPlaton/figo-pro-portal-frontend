@@ -42,7 +42,7 @@ const postUser = (body: PostUserBody): Promise<AxiosResponse<ApiResponse<User>>>
 };
 
 const updateUser = (body: UpdateUserBody): Promise<AxiosResponse<ApiResponse<User>>> => {
-  return apiClient.post<ApiResponse<User>>('/users/update', body);
+  return apiClient.patch<ApiResponse<User>>('/users', body);
 };
 
 export const UsersModule = {
