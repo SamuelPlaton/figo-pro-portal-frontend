@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(response.data);
       })
       .catch((err: AxiosError) => {
+        console.log('ERR', err.response?.data);
         return NextResponse.json(
           { error: err.response?.data || err.message },
           { status: err.response?.status || 500 },
@@ -21,6 +22,7 @@ export async function POST(req: NextRequest) {
       });
     // eslint-disable-next-line
   } catch (err: any) {
+    console.log('ERR 2', err);
     return NextResponse.json(
       { error: err.response?.data || err.message },
       { status: err.response?.status || 500 },

@@ -106,6 +106,7 @@ const SignUpForm = () => {
       addToast('Informations manquantes aux étapes précédentes', 'error');
       return;
     }
+    // todo: call lib api:auth
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       body: JSON.stringify({
@@ -123,16 +124,20 @@ const SignUpForm = () => {
     });
     const resBody = await res.json();
     if (res.status >= 400) {
+      const accountAlreadyExist =
+        resBody?.error.message === 'NOT_PRIMARY_ACCOUNT' ||
+        resBody?.error.code === 'invalid_signup';
       addToast(
-        resBody?.error.code === 'invalid_signup' ? 'Un compte existe déjà pour cet email' : '',
+        accountAlreadyExist ? 'Un compte existe déjà pour cet email' : '',
         'error',
         'Une erreur est survenue',
       );
       return;
     }
+
     return api.users
       .postUser({
-        externalId: resBody._id as string,
+        externalId: `auth0|${resBody._id}`,
         email: contactData.email,
         address: {
           ...addressData,

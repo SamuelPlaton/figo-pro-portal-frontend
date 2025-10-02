@@ -42,6 +42,10 @@ const login = async (body: LoginBody): Promise<AxiosResponse<LoginResponse>> => 
   return axios.post<LoginResponse>('/api/auth/login', body);
 };
 
+const loginSso = async (): Promise<AxiosResponse> => {
+  return axios.get<LoginResponse>('/api/auth/sso/google');
+};
+
 const isConnected = async (): Promise<boolean> => {
   return apiClient
     .get<AuthMeResponse>('/api/auth/me', { baseURL: process.env.NEXT_PUBLIC_APP_BASE_URL })
@@ -56,6 +60,7 @@ const logout = async (): Promise<void> => {
 export const AuthModule = {
   signup,
   login,
+  loginSso,
   isConnected,
   logout,
 };
