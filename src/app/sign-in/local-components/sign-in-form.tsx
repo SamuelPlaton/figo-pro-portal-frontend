@@ -42,9 +42,9 @@ const SignInForm = () => {
   };
 
   // todo: gift popup security -> verify POST body format
-  // todo: MICROSOFT SSO
+  // todo: MANUAL AUTH' !!!
   // todo: Google Auth0 SSO Confirmation Popup -> Brand it Figo
-  // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline)
+  // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline) (Afin que le funnel se fasse pré-remplir / quel lien est partageable)
   return (
     <div className="flex-grow flex flex-col justify-center gap-4 max-w-[392px]">
       <span className="text-lg font-bold">Se connecter</span>
