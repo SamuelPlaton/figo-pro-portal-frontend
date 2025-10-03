@@ -1,11 +1,11 @@
 import { IconProps } from '@/components/icon/icon';
 
-export default function FigoCoinIcon(props: IconProps) {
+export default function FigoCoinIcon({ size, ...props }: IconProps) {
   return (
     <svg
       {...props}
-      width="20"
-      height="25"
+      width={size}
+      height={(size ?? 20) * 1.25}
       viewBox="0 0 20 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

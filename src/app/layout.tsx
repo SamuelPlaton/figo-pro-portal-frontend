@@ -10,6 +10,7 @@ import { Footer, Header } from '@/components';
 import { AuthProvider, ToastProvider } from '@/context';
 import { DrawerProvider } from '@/context/drawer-context';
 import { LinkSharingDrawer } from '@/app/(home)';
+import { OnboardingGuard } from '@/guards';
 
 export const metadata: Metadata = {
   title: 'Figo - Portail vétérinaire',
@@ -27,10 +28,12 @@ export default function RootLayout({
         <ToastProvider>
           <AuthProvider>
             <DrawerProvider>
-              <Header />
-              <main className="flex-grow">{children}</main>
-              <LinkSharingDrawer />
-              <Footer />
+              <OnboardingGuard>
+                <Header />
+                <main className="flex-grow">{children}</main>
+                <LinkSharingDrawer />
+                <Footer />
+              </OnboardingGuard>
             </DrawerProvider>
           </AuthProvider>
         </ToastProvider>

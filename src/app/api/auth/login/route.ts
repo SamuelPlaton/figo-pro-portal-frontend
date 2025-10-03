@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
-import { serialize } from 'cookie';
+import { serializeAccessCookie, serializeIdCookie, serializeRefreshCookie } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,31 +16,6 @@ export async function POST(req: NextRequest) {
     });
     const { access_token, refresh_token, id_token, expires_in } = response.data;
 
-    // Stockage access_token en HttpOnly cookie
-    const accessCookie = serialize('access_token', access_token, {
-      httpOnly: true,
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: expires_in, // in seconds
-    });
-
-    const idCookie = serialize('id_token', id_token, {
-      httpOnly: true,
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: expires_in, // one hour
-    });
-
-    const refreshCookie = serialize('refresh_token', refresh_token, {
-      httpOnly: true,
-      path: '/api/auth/refresh', // only accessible by the refresh route
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: 30 * 24 * 60 * 60, // 30 days
-    });
-
     const nextResponse = NextResponse.json(
       { status: 200 },
       {
@@ -51,6 +26,9 @@ export async function POST(req: NextRequest) {
       },
     );
 
+    const accessCookie = serializeAccessCookie(access_token, expires_in);
+    const idCookie = serializeIdCookie(id_token, expires_in);
+    const refreshCookie = serializeRefreshCookie(refresh_token);
     nextResponse.headers.append('Set-Cookie', accessCookie);
     nextResponse.headers.append('Set-Cookie', refreshCookie);
     nextResponse.headers.append('Set-Cookie', idCookie);
