@@ -2,10 +2,9 @@
 
 import { useForm } from 'react-hook-form';
 import { Button, Input, Select } from '@/components';
-import { withAuthGuard } from '@/guards';
+import { withAuthGuard, withAdminGuard } from '@/guards';
 import { api } from '@/lib/api';
 import { useToast } from '@/context';
-import { withAdminGuard } from '@/guards/admin-guard';
 
 type FormData = { email: string; promoCode?: string; validate: string };
 

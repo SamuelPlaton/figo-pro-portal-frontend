@@ -43,7 +43,7 @@ const SignInForm = () => {
   };
 
   // todo: gift popup security -> verify POST body format
-  // todo: SSO
+  // todo: MICROSOFT SSO
   // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline)
   return (
     <div className="flex-grow flex flex-col justify-center gap-4 max-w-[392px]">

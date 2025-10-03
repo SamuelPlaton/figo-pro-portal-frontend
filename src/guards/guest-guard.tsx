@@ -11,12 +11,13 @@ export function withGuestGuard<P extends object>(WrappedComponent: React.Compone
     const [loading, setLoading] = useState(true);
     const [isGuest, setIsGuest] = useState(false);
     const router = useRouter();
-    const { isAuthenticated } = useAuth();
+    const { user } = useAuth();
 
     useEffect(() => {
       async function checkGuest() {
         try {
-          if (isAuthenticated) {
+          // guest guard requires user from database
+          if (user) {
             router.replace(ROUTES.HOME);
           } else {
             setIsGuest(true);
@@ -30,7 +31,7 @@ export function withGuestGuard<P extends object>(WrappedComponent: React.Compone
       }
 
       checkGuest();
-    }, [router, isAuthenticated]);
+    }, [router, user]);
 
     if (loading) return <PageLoader />;
 

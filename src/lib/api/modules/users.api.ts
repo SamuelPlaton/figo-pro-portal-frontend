@@ -24,13 +24,12 @@ export interface UpdateUserBody {
   validate?: boolean;
 }
 
-const me = (): Promise<User | undefined> => {
+const me = (): Promise<User | null> => {
   return apiClient
     .get<ApiResponse<User>>('/users/me')
     .then(res => res.data.data)
     .catch(err => {
-      console.error('ERR ME', err);
-      return undefined;
+      return null;
     });
 };
 

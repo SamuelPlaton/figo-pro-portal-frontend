@@ -24,8 +24,8 @@ export async function GET(req: NextRequest) {
     });
 
     const authUrl = `${domain}/authorize?${params.toString()}`;
-    console.log('AUTH URL', authUrl);
-    const nextResponse = NextResponse.redirect(authUrl);
+    console.log('State', state);
+    const response = NextResponse.redirect(authUrl);
 
     const stateCookie = serialize('auth_state', state, {
       httpOnly: true,
@@ -39,10 +39,10 @@ export async function GET(req: NextRequest) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     });
-    nextResponse.headers.append('Set-Cookie', stateCookie);
-    nextResponse.headers.append('Set-Cookie', nonceCookie);
+    response.headers.append('Set-Cookie', stateCookie);
+    response.headers.append('Set-Cookie', nonceCookie);
 
-    return NextResponse.redirect(authUrl);
+    return response;
 
     // eslint-disable-next-line
   } catch (err: any) {

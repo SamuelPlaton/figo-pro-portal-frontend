@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
   // const claims = decodeJwt(id_token);
 
   // Tu peux créer ta session (setCookie avec access_token/id_token)
-  const nextResponse = NextResponse.redirect('http://localhost:3000');
+  const nextResponse = NextResponse.redirect('http://localhost:3000/sign-up');
   nextResponse.headers.append('Set-Cookie', accessCookie);
   nextResponse.headers.append('Set-Cookie', refreshCookie);
   nextResponse.headers.append('Set-Cookie', idCookie);
