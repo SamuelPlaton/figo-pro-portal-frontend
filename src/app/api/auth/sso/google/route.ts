@@ -1,14 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { randomBytes } from 'node:crypto';
 import { serialize } from 'cookie';
 
-// todo: !!! auth0 verified email guard
-// todo: !!! SSO Onboarding flow + guard onboarding not done, see for global guards (GUARDS SCHEME)
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const domain = process.env.AUTH0_DOMAIN;
     const clientId = process.env.AUTH0_CLIENT_ID;
-    const redirectUri = 'http://localhost:3000/api/auth/callback';
+    const redirectUri = `${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/auth/callback`;
     const state = randomBytes(16).toString('hex');
     const nonce = randomBytes(16).toString('hex');
 
@@ -19,12 +17,11 @@ export async function GET(req: NextRequest) {
       redirect_uri: redirectUri,
       state,
       nonce,
-      connection: 'google-oauth2', //'google-oauth2',
+      connection: 'google-oauth2',
       audience: process.env.AUTH0_AUDIENCE!,
     });
 
     const authUrl = `${domain}/authorize?${params.toString()}`;
-    console.log('State', state);
     const response = NextResponse.redirect(authUrl);
 
     const stateCookie = serialize('auth_state', state, {

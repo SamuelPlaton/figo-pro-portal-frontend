@@ -18,6 +18,7 @@ import ShoppingCartIcon from '@/components/icon/icons/shopping-cart';
 import UploadIcon from '@/components/icon/icons/upload';
 import UserCircleIcon from '@/components/icon/icons/user-circle';
 import XIcon from '@/components/icon/icons/x';
+import GoogleIcon from '@/components/icon/icons/google';
 
 export type IconName =
   | 'alertTriangle'
@@ -31,6 +32,7 @@ export type IconName =
   | 'eyeOff'
   | 'figoCheck'
   | 'figoCoin'
+  | 'google'
   | 'lock'
   | 'package'
   | 'plus'
@@ -58,6 +60,7 @@ const icons: Record<IconName, React.FC<IconProps>> = {
   eyeOff: EyeOffIcon,
   figoCheck: FigoCheckIcon,
   figoCoin: FigoCoinIcon,
+  google: GoogleIcon,
   lock: LockIcon,
   package: PackageIcon,
   plus: PlusIcon,

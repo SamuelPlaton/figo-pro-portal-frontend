@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
-import { serialize } from 'cookie';
 import { cookies } from 'next/headers';
+import { serializeAccessCookie, serializeIdCookie } from '@/lib/auth';
 
 export async function POST() {
   try {
@@ -19,27 +19,13 @@ export async function POST() {
 
     const { access_token, id_token, expires_in } = response.data;
 
-    const accessCookie = serialize('access_token', access_token, {
-      httpOnly: true,
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: expires_in,
-    });
-
-    const idCookie = serialize('id_token', id_token, {
-      httpOnly: true,
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: expires_in,
-    });
-
     const nextResponse = NextResponse.json(
       { access_token },
       { headers: { 'Content-Type': 'application/json' } },
     );
 
+    const accessCookie = serializeAccessCookie(access_token, expires_in);
+    const idCookie = serializeIdCookie(id_token, expires_in);
     nextResponse.headers.append('Set-Cookie', accessCookie);
     nextResponse.headers.append('Set-Cookie', idCookie);
 

@@ -2,7 +2,7 @@
 
 import { Button, Icon, Input, Select } from '@/components';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PlacesAutocomplete, ProgressBar } from '@/app/sign-up/local-components/index';
 import { AddressForm, ROUTES } from '@/types';
 import { useRouter } from 'next/navigation';
@@ -38,10 +38,7 @@ const SignUpForm = () => {
   const router = useRouter();
   const { addToast } = useToast();
   const { isAuthenticated, authUser, refreshAuth } = useAuth();
-  // todo: remove
-  useEffect(() => {
-    console.log('ONBOARDING EFFECT', { isAuthenticated, authUser });
-  }, [isAuthenticated, authUser]);
+
   const [autocompleteMode, setAutocompleteMode] = useState<'place' | 'address'>('place');
   const [addressData, setAddressData] = useState<AddressFormData>();
   const [passwordData, setPasswordData] = useState<PasswordFormData>();
@@ -96,10 +93,7 @@ const SignUpForm = () => {
   // disable button management on address step
   const handleDisabled = () => {
     const [street1, city, zip] = watchAddressForm(['street1', 'city', 'zip']);
-    if (currentStep === 1 && (!street1 || !city || !zip)) {
-      return true;
-    }
-    return false;
+    return currentStep === 1 && (!street1 || !city || !zip);
   };
 
   const onSubmitContactForm = async (data: ContactFormData) => {

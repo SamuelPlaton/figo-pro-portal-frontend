@@ -39,11 +39,11 @@ const SignInForm = () => {
 
   const onGoogleLogin = async () => {
     window.location.href = '/api/auth/sso/google';
-    //await api.auth.loginSso();
   };
 
   // todo: gift popup security -> verify POST body format
   // todo: MICROSOFT SSO
+  // todo: Google Auth0 SSO Confirmation Popup -> Brand it Figo
   // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline)
   return (
     <div className="flex-grow flex flex-col justify-center gap-4 max-w-[392px]">
@@ -66,9 +66,15 @@ const SignInForm = () => {
         <Button type="submit" label="Se connecter" loading={isSubmitting} />
       </form>
       <span className="text-neutral-low text-center my-6">- Ou se connecter avec -</span>
-      <Button label={"S'inscrire avec Google"} variant="outline" onClick={onGoogleLogin} />
-      <Button label={"S'inscrire avec Microsoft"} variant="outline" />
-      <Button label={'Créer un compte'} variant="outline" href={ROUTES.SIGNUP} />
+      <Button
+        label={'Se connecter avec Google'}
+        size="lg"
+        prependIcon="google"
+        variant="outline"
+        onClick={onGoogleLogin}
+      />
+      <Button label={'Se connecter avec Microsoft'} size="lg" variant="outline" />
+      <Button label={'Créer un compte'} size="lg" variant="outline" href={ROUTES.SIGNUP} />
     </div>
   );
 };
