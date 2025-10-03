@@ -41,9 +41,9 @@ const SignInForm = () => {
     window.location.href = '/api/auth/sso/google';
   };
 
+  // todo: Dockerfiles Front & Back !!!
   // todo: gift popup security -> verify POST body format
   // todo: MANUAL AUTH' !!!
-  // todo: Google Auth0 SSO Confirmation Popup -> Brand it Figo
   // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline) (Afin que le funnel se fasse pré-remplir / quel lien est partageable)
   return (
     <div className="flex-grow flex flex-col justify-center gap-4 max-w-[392px]">
