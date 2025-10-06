@@ -1,29 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
-import axios, { AxiosError } from 'axios';
+import { NextRequest } from 'next/server';
+import axios from 'axios';
+import { serializeAccessCookie, serializeRefreshCookie } from '@/lib/auth';
+import { NextApiResponse } from 'next';
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, res: NextApiResponse) {
   try {
     const body = await req.json();
-    return axios
-      .post(`${process.env.AUTH0_DOMAIN}/dbconnections/signup`, {
-        client_id: process.env.AUTH0_CLIENT_ID,
-        connection: 'Username-Password-Authentication',
-        ...body,
-      })
-      .then(response => {
-        return NextResponse.json(response.data);
-      })
-      .catch((err: AxiosError) => {
-        return NextResponse.json(
-          { error: err.response?.data || err.message },
-          { status: err.response?.status || 500 },
-        );
-      });
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, body);
+    const { access_token, refresh_token, expires_in } = response.data.data;
+    res.setHeader('Set-Cookie', serializeRefreshCookie(refresh_token));
+    res.setHeader('Set-Cookie', serializeAccessCookie(access_token, expires_in));
+    res.status(200).json({ access_token: access_token });
     // eslint-disable-next-line
   } catch (err: any) {
-    return NextResponse.json(
-      { error: err.response?.data || err.message },
-      { status: err.response?.status || 500 },
-    );
+    res.status(err.response?.status || 500).json({ error: err.response?.data || err.message });
   }
 }

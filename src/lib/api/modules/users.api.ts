@@ -14,7 +14,7 @@ export interface PostUserBody {
     zip: string;
     city: string;
   };
-  externalId: string;
+  password: string;
   email: string;
 }
 
