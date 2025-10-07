@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/context/toast-context';
 import { api } from '@/lib/api';
 import { useAuth } from '@/context';
-import { AxiosError } from 'axios';
 
 type AddressFormData = {
   street1: string;
@@ -30,14 +29,14 @@ type IdentityFormData = {
 };
 
 type PasswordFormData = {
-  password?: string;
-  confirmPassword?: string;
+  password: string;
+  confirmPassword: string;
 };
 
 const SignUpForm = () => {
   const router = useRouter();
   const { addToast } = useToast();
-  const { isAuthenticated, authUser, refreshAuth } = useAuth();
+  const { refreshAuth } = useAuth();
 
   const [autocompleteMode, setAutocompleteMode] = useState<'place' | 'address'>('place');
   const [addressData, setAddressData] = useState<AddressFormData>();
@@ -56,11 +55,7 @@ const SignUpForm = () => {
     register: contactFormRegister,
     handleSubmit: submitContactForm,
     formState: { errors: contactFormErrors, isSubmitting: isContactFormSubmitting },
-  } = useForm<ContactFormData>({
-    defaultValues: {
-      email: authUser?.email,
-    },
-  });
+  } = useForm<ContactFormData>();
 
   const {
     register: passwordFormRegister,
@@ -98,8 +93,7 @@ const SignUpForm = () => {
 
   const onSubmitContactForm = async (data: ContactFormData) => {
     setContactData(data);
-    const increment = authUser?.email ? 2 : 1; // if auth user already defined, skip password step
-    setCurrentStep(currentStep + increment);
+    setCurrentStep(currentStep + 1);
   };
 
   const onSubmitPasswordForm = async (data: PasswordFormData) => {
@@ -108,64 +102,35 @@ const SignUpForm = () => {
   };
 
   const onSubmitIdentityForm = async (data: IdentityFormData) => {
-    if (!contactData || !addressData || (!passwordData && !authUser)) {
+    if (!contactData || !addressData || !passwordData) {
       addToast('Informations manquantes aux étapes précédentes', 'error');
       return;
     }
-    // Auth0 Register for Username-Password Auth, skipped for SSO Auth
-    let authExternalId = authUser?.sub ?? '';
-    if (!authUser && passwordData?.password) {
-      try {
-        const authRes = await api.auth.signup({
-          email: contactData?.email as string,
-          password: passwordData?.password,
-          given_name: data.firstName ? data.firstName : undefined,
-          family_name: data.lastName ? data.lastName : undefined,
-          name: data.firstName
-            ? `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}`
-            : undefined,
-          phone_number: contactData?.phoneNumber
-            ? `${contactData.phoneIndicative} ${contactData.phoneNumber}`
-            : undefined,
-        });
 
-        authExternalId = `auth0|${authRes.data._id}`;
-      } catch (error) {
-        let accountAlreadyExist = false;
-        if (error instanceof AxiosError) {
-          const { message, code } = error.response?.data.error;
-          accountAlreadyExist = message === 'NOT_PRIMARY_ACCOUNT' || code === 'invalid_signup';
-        }
-        addToast(
-          accountAlreadyExist ? 'Un compte existe déjà pour cet email' : '',
-          'error',
-          'Une erreur est survenue',
-        );
-        return;
-      }
-    }
-
-    // Save User in Database
-    return api.users
-      .postUser({
-        externalId: authExternalId,
+    return api.auth
+      .signup({
+        password: passwordData.password,
         email: contactData.email,
         address: {
           ...addressData,
           ...contactData,
+          ...data,
         },
       })
       .then(async () => {
         await refreshAuth();
-        addToast(
-          !authUser ? 'Vous pouvez désormais vous connecter' : '',
-          'success',
-          'Compte crée avec succès',
-        );
-        router.push(ROUTES.SIGNIN);
+        addToast('', 'success', 'Compte crée avec succès');
+        router.push(ROUTES.HOME);
       })
-      .catch(() => {
-        addToast('Veuillez contacter le support', 'error', 'Une erreur est survenue');
+      .catch(error => {
+        addToast(
+          error?.response?.data?.data?.message === 'EMAIL_ALREADY_USED'
+            ? 'Un compte existe déjà pour cet email'
+            : 'Veuillez contacter le support',
+          'error',
+          'Une erreur est survenue',
+        );
+        return;
       });
   };
 
@@ -247,7 +212,6 @@ const SignUpForm = () => {
               error={contactFormErrors.email?.message}
               className="w-full"
               {...contactFormRegister('email', { required: 'Ce champ est requis' })}
-              disabled={!!authUser?.email}
             />
           </div>
           <div className="flex flex-row items-end justify-between gap-2">

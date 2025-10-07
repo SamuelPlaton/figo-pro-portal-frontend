@@ -1,31 +1,8 @@
 import { NextResponse } from 'next/server';
-import { serialize } from 'cookie';
+import { serializeAccessCookie, serializeRefreshCookie } from '@/lib/auth';
 
 export async function POST() {
   // Delete Cookies
-  const accessCookie = serialize('access_token', '', {
-    httpOnly: true,
-    path: '/',
-    maxAge: 0,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-  });
-
-  const idCookie = serialize('id_token', '', {
-    httpOnly: true,
-    path: '/',
-    maxAge: 0,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-  });
-
-  const refreshCookie = serialize('refresh_token', '', {
-    httpOnly: true,
-    path: '/',
-    maxAge: 0,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-  });
 
   const nextResponse = NextResponse.json(
     { success: true },
@@ -34,8 +11,8 @@ export async function POST() {
     },
   );
 
-  nextResponse.headers.append('Set-Cookie', accessCookie);
-  nextResponse.headers.append('Set-Cookie', idCookie);
-  nextResponse.headers.append('Set-Cookie', refreshCookie);
+  nextResponse.headers.append('Set-Cookie', serializeAccessCookie('', 0));
+  nextResponse.headers.append('Set-Cookie', serializeRefreshCookie('', 0));
+
   return nextResponse;
 }

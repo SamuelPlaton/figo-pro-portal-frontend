@@ -1,24 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
-import { apiClient } from '@/lib/api';
+import { User } from '@/types';
 
 export interface SignUpBody {
-  email: string;
+  address: {
+    firstName?: string;
+    lastName?: string;
+    company?: string;
+    phoneNumber?: string;
+    phoneIndicative?: string;
+    email: string;
+    street1: string;
+    zip: string;
+    city: string;
+  };
   password: string;
-  given_name?: string;
-  family_name?: string;
-  name?: string;
-  phone_number?: string;
+  email: string;
 }
 export interface SignUpResponse {
-  _id: string;
-  email: string;
-  email_verified: boolean;
-  app_metadata?: object;
-  user_metadata?: object;
-  error?: {
-    code: string;
-    message: string;
-  };
+  access_token: string;
 }
 
 export interface LoginBody {
@@ -30,16 +29,9 @@ export interface LoginResponse {
   status: number;
 }
 
-export interface AuthUser {
-  sub: string;
-  email: string;
-  name?: string;
-}
-
 export interface AuthMeResponse {
   authenticated: boolean;
-  error?: string;
-  user?: AuthUser;
+  user: User | null;
 }
 
 const signup = async (body: SignUpBody): Promise<AxiosResponse<SignUpResponse>> => {
@@ -50,14 +42,8 @@ const login = async (body: LoginBody): Promise<AxiosResponse<LoginResponse>> => 
   return axios.post<LoginResponse>('/api/auth/login', body);
 };
 
-const loginSso = async (): Promise<AxiosResponse> => {
-  return axios.get<LoginResponse>('/api/auth/sso/google');
-};
-
 const me = async (): Promise<AxiosResponse<AuthMeResponse>> => {
-  return apiClient.get<AuthMeResponse>('/api/auth/me', {
-    baseURL: process.env.NEXT_PUBLIC_APP_BASE_URL,
-  });
+  return axios.get<AuthMeResponse>('/api/auth/me');
 };
 
 const logout = async (): Promise<void> => {
@@ -67,7 +53,6 @@ const logout = async (): Promise<void> => {
 export const AuthModule = {
   signup,
   login,
-  loginSso,
-  me,
   logout,
+  me,
 };

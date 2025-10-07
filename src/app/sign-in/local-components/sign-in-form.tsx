@@ -29,7 +29,7 @@ const SignInForm = () => {
         router.push(ROUTES.HOME);
       })
       .catch(error => {
-        if (error.status === 403) {
+        if (error.status === 401) {
           addToast('Email ou mot de passe invalide', 'error');
         } else {
           addToast('Une erreur est survenue', 'error');
@@ -37,13 +37,8 @@ const SignInForm = () => {
       });
   };
 
-  const onGoogleLogin = async () => {
-    window.location.href = '/api/auth/sso/google';
-  };
-
   // todo: Dockerfiles Front & Back !!!
   // todo: gift popup security -> verify POST body format
-  // todo: MANUAL AUTH' !!!
   // todo: assert a link exist for Figo Promo Code redirection (see w/ Emeline) (Afin que le funnel se fasse pré-remplir / quel lien est partageable)
   return (
     <div className="flex-grow flex flex-col justify-center gap-4 max-w-[392px]">
@@ -65,15 +60,6 @@ const SignInForm = () => {
         />
         <Button type="submit" label="Se connecter" loading={isSubmitting} />
       </form>
-      <span className="text-neutral-low text-center my-6">- Ou se connecter avec -</span>
-      <Button
-        label={'Se connecter avec Google'}
-        size="lg"
-        prependIcon="google"
-        variant="outline"
-        onClick={onGoogleLogin}
-      />
-      <Button label={'Se connecter avec Microsoft'} size="lg" variant="outline" />
       <Button label={'Créer un compte'} size="lg" variant="outline" href={ROUTES.SIGNUP} />
     </div>
   );
