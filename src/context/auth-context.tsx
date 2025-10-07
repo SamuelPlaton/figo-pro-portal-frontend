@@ -25,6 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsAuthenticated(response.data.authenticated);
       setUser(response.data.user);
     } catch (error) {
+      console.error('An error happened during User retrieve', error);
       setIsAuthenticated(false);
       setUser(null);
     }

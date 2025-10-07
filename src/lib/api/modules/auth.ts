@@ -2,23 +2,22 @@ import axios, { AxiosResponse } from 'axios';
 import { User } from '@/types';
 
 export interface SignUpBody {
-  email: string;
+  address: {
+    firstName?: string;
+    lastName?: string;
+    company?: string;
+    phoneNumber?: string;
+    phoneIndicative?: string;
+    email: string;
+    street1: string;
+    zip: string;
+    city: string;
+  };
   password: string;
-  given_name?: string;
-  family_name?: string;
-  name?: string;
-  phone_number?: string;
+  email: string;
 }
 export interface SignUpResponse {
-  _id: string;
-  email: string;
-  email_verified: boolean;
-  app_metadata?: object;
-  user_metadata?: object;
-  error?: {
-    code: string;
-    message: string;
-  };
+  access_token: string;
 }
 
 export interface LoginBody {

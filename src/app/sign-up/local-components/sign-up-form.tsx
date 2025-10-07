@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/context/toast-context';
 import { api } from '@/lib/api';
 import { useAuth } from '@/context';
-import { AxiosError } from 'axios';
 
 type AddressFormData = {
   street1: string;
@@ -108,8 +107,8 @@ const SignUpForm = () => {
       return;
     }
 
-    return api.users
-      .postUser({
+    return api.auth
+      .signup({
         password: passwordData.password,
         email: contactData.email,
         address: {
@@ -121,11 +120,13 @@ const SignUpForm = () => {
       .then(async () => {
         await refreshAuth();
         addToast('', 'success', 'Compte crée avec succès');
-        router.push(ROUTES.SIGNIN);
+        router.push(ROUTES.HOME);
       })
       .catch(error => {
         addToast(
-          error.message === 'EMAIL_ALREADY_USED' ? 'Un compte existe déjà pour cet email' : '',
+          error?.response?.data?.data?.message === 'EMAIL_ALREADY_USED'
+            ? 'Un compte existe déjà pour cet email'
+            : 'Veuillez contacter le support',
           'error',
           'Une erreur est survenue',
         );
